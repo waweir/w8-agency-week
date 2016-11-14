@@ -4,9 +4,16 @@ $color2: #C22E14;
 * {
     box-sizing: border-box;
 }
-img { width: 100% }
+img { }
 
 header {
     width:100%;
     margin-bottom: 100px;
+    .navbar {
+        height: 2vh;
+    }
+}
+
+#logo {
+    width: 10vw;
 }
