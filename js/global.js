@@ -9,7 +9,7 @@ import CartDisplay from '../components/CartDisplay'
 ReactDOM.render(
     <Router history={browserHistory}>
         <Route path="/" component={Main}>
-            <IndexRoute component={SockDisplay}/>
+            <IndexRoute component={SockDisplay} />
             <Route path="/socks" component={SockDisplay} />
             <Route path="/cart" component={CartDisplay} />
         </Route>

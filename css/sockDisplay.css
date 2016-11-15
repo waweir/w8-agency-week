@@ -11,6 +11,18 @@ header .navbar {
   height: 2vh;
 }
 
-#logo {
+.logo {
   width: 10vw;
+}
+
+footer {
+  position: sticky;
+}
+
+#teamLogo {
+  width: 10vw;
+}
+
+.pushDown {
+  margin-top: 15px;
 }
