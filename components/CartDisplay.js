@@ -313,7 +313,17 @@ class CartDisplay extends React.Component {
                     </div>
                 </div>
                 <div className="col-sm-4">
-                    <h2>Confirm your order</h2>
+                    <h2>3. Confirm your order</h2>
+                    <div className="well">
+                        <div className="row">
+                            <div classname="col-sm-3">
+                                <img src="http://www.unsplash.it/100?random" width="100" />
+                            </div>
+                            <div classname="col-sm-3">
+                                test
+                            </div>
+                        </div>
+                    </div>
                     <button className="btn btn-default btn-block">Purchase</button>
                 </div>
             </div>
