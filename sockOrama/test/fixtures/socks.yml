@@ -2,18 +2,20 @@
 
 one:
   name: MyString
-  primary_color: MyString
-  style: MyString
-  size: MyString
-  description: MyText
+  color: one
+  style: one
+  category: one
   price: 1
-  material: MyString
+  description: MyText
+  image_url: MyString
+  line_items: one
 
 two:
   name: MyString
-  primary_color: MyString
-  style: MyString
-  size: MyString
-  description: MyText
+  color: two
+  style: two
+  category: two
   price: 1
-  material: MyString
+  description: MyText
+  image_url: MyString
+  line_items: two
