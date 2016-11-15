@@ -5,6 +5,9 @@ class SocksController < ApplicationController
     render json: @socks
   end
 
+  def static
+  end
+
   def create
     @sock = Sock.new(params: [:name, :primary_color, :style, :size, :price, :material, :category])
     if @sock.save
