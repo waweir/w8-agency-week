@@ -46,6 +46,139 @@ CREATE TABLE ar_internal_metadata (
 
 
 --
+-- Name: carts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE carts (
+    id integer NOT NULL,
+    token character varying,
+    address character varying,
+    email character varying,
+    customer character varying,
+    complete boolean,
+    line_item_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: carts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE carts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: carts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE carts_id_seq OWNED BY carts.id;
+
+
+--
+-- Name: inventories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE inventories (
+    id integer NOT NULL,
+    quantity integer,
+    item_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: inventories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE inventories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: inventories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE inventories_id_seq OWNED BY inventories.id;
+
+
+--
+-- Name: items; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE items (
+    id integer NOT NULL,
+    sock_id integer,
+    size character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE items_id_seq OWNED BY items.id;
+
+
+--
+-- Name: line_items; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE line_items (
+    id integer NOT NULL,
+    item_id integer,
+    cart_id integer,
+    quantity integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: line_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE line_items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: line_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE line_items_id_seq OWNED BY line_items.id;
+
+
+--
 -- Name: refile_attachments; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -94,7 +227,6 @@ CREATE TABLE socks (
     name character varying,
     primary_color character varying,
     style character varying,
-    size character varying,
     description text,
     price integer,
     material character varying,
@@ -128,6 +260,34 @@ ALTER SEQUENCE socks_id_seq OWNED BY socks.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY carts ALTER COLUMN id SET DEFAULT nextval('carts_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY inventories ALTER COLUMN id SET DEFAULT nextval('inventories_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY items ALTER COLUMN id SET DEFAULT nextval('items_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY line_items ALTER COLUMN id SET DEFAULT nextval('line_items_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY refile_attachments ALTER COLUMN id SET DEFAULT nextval('refile_attachments_id_seq'::regclass);
 
 
@@ -144,6 +304,38 @@ ALTER TABLE ONLY socks ALTER COLUMN id SET DEFAULT nextval('socks_id_seq'::regcl
 
 ALTER TABLE ONLY ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: carts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY carts
+    ADD CONSTRAINT carts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: inventories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY inventories
+    ADD CONSTRAINT inventories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY items
+    ADD CONSTRAINT items_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: line_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY line_items
+    ADD CONSTRAINT line_items_pkey PRIMARY KEY (id);
 
 
 --
@@ -171,6 +363,41 @@ ALTER TABLE ONLY socks
 
 
 --
+-- Name: index_carts_on_line_item_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_carts_on_line_item_id ON carts USING btree (line_item_id);
+
+
+--
+-- Name: index_inventories_on_item_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_inventories_on_item_id ON inventories USING btree (item_id);
+
+
+--
+-- Name: index_items_on_sock_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_items_on_sock_id ON items USING btree (sock_id);
+
+
+--
+-- Name: index_line_items_on_cart_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_line_items_on_cart_id ON line_items USING btree (cart_id);
+
+
+--
+-- Name: index_line_items_on_item_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_line_items_on_item_id ON line_items USING btree (item_id);
+
+
+--
 -- Name: index_refile_attachments_on_namespace; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -190,6 +417,6 @@ CREATE INDEX index_refile_attachments_on_oid ON refile_attachments USING btree (
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20161114210821'), ('20161114223258'), ('20161114224727'), ('20161114225843');
+INSERT INTO schema_migrations (version) VALUES ('20161114210821'), ('20161114223258'), ('20161114224727'), ('20161114225843'), ('20161115162702'), ('20161115190242'), ('20161115190340'), ('20161115190818'), ('20161115191228');
 
 
