@@ -21,11 +21,14 @@ class Main extends React.Component {
                       </div>
                     </form>
                 </div>
-                <div className="col-sm-3 col-sm-offset-1">
+                <div className="col-sm-1 col-sm-offset-3">
                     <Link to="/cart">
                     {/* TODO: where # is, put the counter of items.*/}
-                        <div className="glyphicon glyphicon-shopping-cart"> #
+                    <button className=" btn btn-primary btn-success">
+                        <div className="glyphicon glyphicon-shopping-cart">
+                            <span className="badge">#</span>
                         </div>
+                    </button>
                     </Link>
                 </div>
                 </div>
