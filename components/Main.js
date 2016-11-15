@@ -34,6 +34,26 @@ class Main extends React.Component {
                 <p>This will display the child pages</p>
                 {this.props.children}
             </div>
+            <footer className="row">
+                <div className="col-xs-1 col-xs-offset-5">
+                    <img id="teamLogo" src="img/IWT-logo.jpg" alt="Worker's Logo" />
+                </div>
+                <div className="col-xs-1 col-xs-offset-3 pushDown">
+                    <Link to="#">
+                        <div className="fa fa-facebook" aria-hidden="true"></div>
+                    </Link>
+                </div>
+                <div className="col-xs-1 pushDown">
+                    <Link to="#">
+                        <div className="fa fa-twitter" aria-hidden="true"></div>
+                    </Link>
+                </div>
+                <div className="col-xs-1 pushDown">
+                    <Link to="#">
+                        <div className="fa fa-pinterest-p" aria-hidden="true"></div>
+                    </Link>
+                </div>
+            </footer>
         </div>
     }
 }
