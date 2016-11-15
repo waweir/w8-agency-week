@@ -1,0 +1,14 @@
+<%= form_tag charges_path do %>
+  <article>
+    <div id="card_errors"></div>
+    <label class="amount">
+      <span>Amount: <%=cart.total%></span>
+    </label>
+  </article>
+
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+          data-description="Socks and socks"
+          data-amount="500"
+          data-locale="auto"></script>
+<% end %>
