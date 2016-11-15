@@ -28,7 +28,7 @@ class SockDisplay extends React.Component {
         })
     }
     afterOpenModal() {
-        this.refs.subtitle.style.color='#f00'
+
     }
     closeModal() {
         this.setState({
@@ -212,7 +212,6 @@ class SockDisplay extends React.Component {
 
         {/* Begin modal */}
         <div className="container">
-          <button onClick={this.openModal}>Open Modal</button>
           <Modal
             isOpen={this.state.modalIsOpen}
             onAfterOpen={this.afterOpenModal}
@@ -230,10 +229,9 @@ class SockDisplay extends React.Component {
             </div>
             <div className="row">
             <div className="col-sm-6 text-center">
-              <img src="http://unsplash.it/300?random"/>
+              <img src="http://unsplash.it/300?random" width="100%"/>
             </div>
             <div className="col-sm-6">
-            <form>
               <div className="form-group">
                 <label htmlFor="size">Size</label>
                 <select id="size" name="size" className="form-control">
@@ -253,14 +251,18 @@ class SockDisplay extends React.Component {
                   <option value="1">1</option>
                 </select>
               </div>
-
-              <input />
-              <button>tab navigation</button>
-              <button>stays</button>
-              <button>inside</button>
-              <button>the modal</button>
-            </form>
+              <div>
+                <p>Color: sock color</p>
+                <p>Style: sock style</p>
+                <p>Material: sock material</p>
+              </div>
             </div>
+            </div>
+            <hr />
+            <div className="row">
+              <div className="col-sm-6 col-sm-offset-3">
+                  <button type="button" className="btn btn-success btn-block">Add to cart</button>
+              </div>
             </div>
           </Modal>
         </div>
