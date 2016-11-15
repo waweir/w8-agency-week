@@ -5,3 +5,33 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Sock.create(
+  name: "Painters"
+  primary_color: ""
+  style:
+  size:
+  price:
+  material:
+  category: "Blended"
+)
+
+Sock.create(
+  name:
+  primary_color:
+  style:
+  size:
+  price:
+  material:
+  category: "Blended"
+)
+
+Sock.create(
+  name:
+  primary_color:
+  style:
+  size:
+  price:
+  material:
+  category: "Blended"
+)
