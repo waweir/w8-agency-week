@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 
-import Main from '../components/Main'
+import Main from '../webpack/Main'
 import SockDisplay from './SockDisplay'
 import CartDisplay from './CartDisplay'
 

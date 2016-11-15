@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 
-import Main from '../components/Main'
-import SockDisplay from '../components/SockDisplay'
-import CartDisplay from '../components/CartDisplay'
+import Main from '../webpack/Main'
+import SockDisplay from '../webpack/SockDisplay'
+import CartDisplay from '../webpack/CartDisplay'
 
 ReactDOM.render(
     <Router history={browserHistory}>
