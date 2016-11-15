@@ -32,6 +32,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
-    "moment": "^2.15.2"
+    "moment": "^2.15.2",
+    "react-modal": "^1.5.2"
   }
 }

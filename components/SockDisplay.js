@@ -1,19 +1,41 @@
 import React from 'react'
 import classAutoBind from 'react-helpers/dist/classAutoBind'
-import { sharedState, attachSharedState, detachSharedState } from 'react-helpers/dist/sharedState'
+import Modal from 'react-modal'
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 class SockDisplay extends React.Component {
     constructor(props) {
         super(props)
         classAutoBind(this)
-        this.state = sharedState()
+        this.state = {
+            modalIsOpen: false,
+            quantity: 10,
+        }
     }
-    componentDidMount() {
-        attachSharedState(this)
+    openModal() {
+        this.setState({
+            modalIsOpen: true
+        })
     }
-    componentWillUnmount() {
-        detachSharedState(this)
+    afterOpenModal() {
+        this.refs.subtitle.style.color='#f00'
     }
+    closeModal() {
+        this.setState({
+            modalIsOpen:false
+        })
+    }
+
     render() {
         return <main className="container">
             <div className="row">
@@ -169,7 +191,7 @@ class SockDisplay extends React.Component {
             </section>
             <div className="col-xs-8 col-sm-9">
                 <div className="col-xs-6 col-sm-4">
-                    <div className="panel panel-default">
+                    <div className="panel panel-default" onClick={this.openModal}>
                         <div className="panel-body">
                             <div className="row">
                                 <img src="http://unsplash.it/300?random" width="100%"/>
@@ -187,25 +209,65 @@ class SockDisplay extends React.Component {
                 </div>
             </div>
         </div>
+
+        {/* Begin modal */}
+        <div className="container">
+          <button onClick={this.openModal}>Open Modal</button>
+          <Modal
+            isOpen={this.state.modalIsOpen}
+            onAfterOpen={this.afterOpenModal}
+            onRequestClose={this.closeModal}
+            style={customStyles}
+            contentLabel="Sock Modal"
+          >
+            <div className="row">
+              <div className="col-xs-10">
+                <h2 ref="subtitle">Name of Sock</h2>
+              </div>
+              <div className="col-xs-2 text-right">
+                <button className="btn btn-default" onClick={this.closeModal}>X</button>
+              </div>
+            </div>
+            <div className="row">
+            <div className="col-sm-6 text-center">
+              <img src="http://unsplash.it/300?random"/>
+            </div>
+            <div className="col-sm-6">
+            <form>
+              <div className="form-group">
+                <label htmlFor="size">Size</label>
+                <select id="size" name="size" className="form-control">
+                  <option disabled selected> -- Select a size -- </option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XXL</option>
+                  <option value="XXXL">XXXL</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="quantity">Quantity</label>
+                <select id="quantity" name="quantity" className="form-control">
+                  <option disabled selected> -- Select a quantity -- </option>
+                  <option value="1">1</option>
+                </select>
+              </div>
+
+              <input />
+              <button>tab navigation</button>
+              <button>stays</button>
+              <button>inside</button>
+              <button>the modal</button>
+            </form>
+            </div>
+            </div>
+          </Modal>
+        </div>
+        {/* End modal */}
+
     </main>
 
-
-    // Begin modal for all pictures
-    // <div class="modal fade" id="sockModal" tabindex="-1" role="dialog">
-    //   <div class="modal-dialog" role="document">
-    //     <div class="modal-content container-fluid">
-    //       <div class="modal-header row">
-    //         <p class="caption lead col-xs-6"></p>
-    //         <a class="close col-xs-6 text-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
-    //       </div>
-    //       <div class="modal-body">
-    //           <img src="" class="imagePreview" width=100% />
-    //       </div>
-    //       <div class="modal-footer"></div>
-    //     </div>
-    //   </div>
-    // </div>
-    // End modal for all pictures
     }
 }
 
