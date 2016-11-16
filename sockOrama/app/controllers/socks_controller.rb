@@ -18,8 +18,13 @@ class SocksController < ApplicationController
   end
 
   def show
-    @sock = Sock.find
+    @sock = Sock.find(params[:id])
     render json: @sock
   end
+
+private
+
+
+
 
 end
