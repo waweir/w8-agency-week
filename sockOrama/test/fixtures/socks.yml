@@ -6,9 +6,9 @@ one:
   style: one
   category: one
   price: 1
-  description: MyText
-  image_url: MyString
-  line_items: one
+  description: MyString
+  image: MyString
+  featured: false
 
 two:
   name: MyString
@@ -16,6 +16,6 @@ two:
   style: two
   category: two
   price: 1
-  description: MyText
-  image_url: MyString
-  line_items: two
+  description: MyString
+  image: MyString
+  featured: false
