@@ -20,6 +20,7 @@ class SockDisplay extends React.Component {
         this.state = {
             modalIsOpen: false,
             quantity: 10,
+            sizeSelection: '0'
         }
     }
     openModal() {
@@ -35,11 +36,15 @@ class SockDisplay extends React.Component {
             modalIsOpen:false
         })
     }
+    handleSizeChange(e) {
+      this.setState({
+        sizeSelection: e.target.value
+      })
+    }
 
     render() {
         return <main className="container">
             <div className="row">
-            <h1>Sock Display</h1>
             <section className="col-xs-4 col-sm-3 well">
                 <h4>Price</h4>
                 <div className="radio">
@@ -234,8 +239,8 @@ class SockDisplay extends React.Component {
             <div className="col-sm-6">
               <div className="form-group">
                 <label htmlFor="size">Size</label>
-                <select id="size" name="size" className="form-control">
-                  <option disabled selected> -- Select a size -- </option>
+                <select id="size" name="size" value={this.state.sizeSelection} className="form-control" onChange={this.handleSizeChange}>
+                  <option disabled value="0-">-- Select a size --</option>
                   <option value="S">S</option>
                   <option value="M">M</option>
                   <option value="L">L</option>
@@ -246,10 +251,7 @@ class SockDisplay extends React.Component {
               </div>
               <div className="form-group">
                 <label htmlFor="quantity">Quantity</label>
-                <select id="quantity" name="quantity" className="form-control">
-                  <option disabled selected> -- Select a quantity -- </option>
-                  <option value="1">1</option>
-                </select>
+                <input className="form-control" type="number" name="quantity" id="quantity" step="1" min="1" defaultValue="1" max={this.state.quantity} pattern="[0-9]*" inputMode="numeric" />
               </div>
               <div>
                 <p>Color: sock color</p>
