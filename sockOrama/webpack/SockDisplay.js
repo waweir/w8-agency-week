@@ -19,7 +19,8 @@ class SockDisplay extends React.Component {
         classAutoBind(this)
         this.state = {
             modalIsOpen: false,
-            quantity: 10,
+            quantity: 1,
+            maxQuantity: 10,
             sizeSelection: '0'
         }
     }
@@ -294,7 +295,7 @@ class SockDisplay extends React.Component {
               </div>
               <div className="form-group">
                 <label htmlFor="quantity">Quantity</label>
-                <input className="form-control" type="number" name="quantity" id="quantity" step="1" min="1" value='1' max={this.state.quantity} pattern="[0-9]*" inputMode="numeric" onChange={this.handleQuantityChange}/>
+                <input className="form-control" type="number" name="quantity" id="quantity" step="1" min="1" value={this.state.quantity} max={this.state.maxQuantity} pattern="[0-9]*" inputMode="numeric" onChange={this.handleQuantityChange}/>
               </div>
               <div>
                 <p>Color: Various</p>

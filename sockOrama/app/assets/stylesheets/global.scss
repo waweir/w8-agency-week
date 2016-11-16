@@ -1,38 +1,50 @@
-$color1: #1B7FFB;
-$color2: #C22E14;
+$blue: #1B7FFB;
+$red: #C22E14;
 
 * {
     box-sizing: border-box;
 }
-
-header {
-    width:100%;
-    margin-bottom: 100px;
-    .navbar {
-        height: 2vh;
+.header {
+    padding: 3vh;
+    border-bottom: 2px solid $red;
+    background-color: white;
+    box-shadow: 0px 2px 5px gray;
+}
+.logo {
+    width: 25vh;
+}
+.cartButton {
+    background-color: $blue;
+    div {
+        color: white;
+        width: 50%;
+    }
+    .badge {
+        color: white;
+        background-color: transparent;
+    }
+    &:hover {
+        background-color: $red;
     }
 }
-
-.logo {
-    width: 10vw;
+#socksContainer {
+    background-color: #f5f5f1;
 }
-
-footer {
-    position:sticky;
-
-}
-
 #teamLogo {
     width: 10vw;
 }
-
+footer {
+    background-color: white;
+    padding: 3vh;
+    border-top: 2px solid $red;
+    box-shadow: 0px -2px 5px gray;
+}
 #cart-confirmation {
     display: inline-block;
     font-size: 13px;
     .justify-right {
         text-align: right;
     }
-
 }
 
 .pushDown {

@@ -7,32 +7,29 @@ class Main extends React.Component {
     }
     render() {
         return <div>
-            <div className="panel panel-default">
-                <div className="panel-body">
-                <div className="col-sm-4">
+            <div className="header row">
+                <div className="col-xs-12 col-sm-4">
                 <Link to="/socks"><img alt="Brand" className="logo" src="img/sock-o-rama.png" /></Link>
                 </div>
-                <div className="col-sm-4">
-                    <form className="navbar-form navbar-left" role="search">
+                <div className="col-xs-8 col-sm-4 text-center">
+                    <form className="form-inline" role="search">
                       <div className="form-group">
                         <input type="text" className="form-control" placeholder="Search" />
                       <button type="submit" className="btn btn-default">Submit</button>
                       </div>
                     </form>
                 </div>
-                <div className="col-sm-1 col-sm-offset-3">
+                <div className="col-xs-4 col-sm-4 text-right">
                     <Link to="/cart">
                     {/* TODO: where # is, put the counter of items.*/}
-                    <button className=" btn btn-primary btn-success">
-                        <div className="glyphicon glyphicon-shopping-cart">
-                            <span className="badge">#</span>
-                        </div>
+                    <button className="cartButton btn btn-default btn-lg">
+                        <div className="glyphicon glyphicon-shopping-cart"></div>
+                        <span className="badge">#</span>
                     </button>
                     </Link>
                 </div>
-                </div>
             </div>
-            <div>
+            <div className="children">
                 {this.props.children}
             </div>
             <footer className="row">
@@ -40,19 +37,19 @@ class Main extends React.Component {
                     <img id="teamLogo" src="img/IWT-logo.jpg" alt="Worker's Logo" />
                 </div>
                 <div className="col-xs-1 col-xs-offset-3 pushDown">
-                    <Link to="#">
+                    <a href="#">
                         <div className="fa fa-facebook" aria-hidden="true"></div>
-                    </Link>
+                    </a>
                 </div>
                 <div className="col-xs-1 pushDown">
-                    <Link to="#">
+                    <a href="#">
                         <div className="fa fa-twitter" aria-hidden="true"></div>
-                    </Link>
+                    </a>
                 </div>
                 <div className="col-xs-1 pushDown">
-                    <Link to="#">
+                    <a href="#">
                         <div className="fa fa-pinterest-p" aria-hidden="true"></div>
-                    </Link>
+                    </a>
                 </div>
             </footer>
         </div>
