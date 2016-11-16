@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'socks#index'
+  root 'socks#static'
   resources :carts
   resources :socks
   resources :charges, only: [:create]
