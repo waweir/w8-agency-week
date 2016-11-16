@@ -41,6 +41,11 @@ class SockDisplay extends React.Component {
         sizeSelection: e.target.value
       })
     }
+    handleQuantityChange(e) {
+      this.setState({
+        quantity: e.target.value
+      })
+    }
 
     render() {
         return <main className="container">
@@ -252,7 +257,7 @@ class SockDisplay extends React.Component {
               </div>
               <div className="form-group">
                 <label htmlFor="quantity">Quantity</label>
-                <input className="form-control" type="number" name="quantity" id="quantity" step="1" min="1" defaultValue="1" max={this.state.quantity} pattern="[0-9]*" inputMode="numeric" />
+                <input className="form-control" type="number" name="quantity" id="quantity" step="1" min="1" value='1' max={this.state.quantity} pattern="[0-9]*" inputMode="numeric" onChange={this.handleQuantityChange}/>
               </div>
               <div>
                 <p>Color: Various</p>
