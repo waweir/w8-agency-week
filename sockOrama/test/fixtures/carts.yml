@@ -2,16 +2,14 @@
 
 one:
   token: MyString
-  line_item: one
-  address: MyText
+  ship_to_address: MyString
   email: MyString
   customer: MyString
   complete: false
 
 two:
   token: MyString
-  line_item: two
-  address: MyText
+  ship_to_address: MyString
   email: MyString
   customer: MyString
   complete: false
