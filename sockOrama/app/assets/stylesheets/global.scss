@@ -4,6 +4,9 @@ $red: #C22E14;
 * {
     box-sizing: border-box;
 }
+body {
+    font-family: 'Lato', sans-serif;
+}
 .header {
     padding: 3vh;
     border-bottom: 2px solid $red;
@@ -27,6 +30,9 @@ $red: #C22E14;
         background-color: $red;
     }
 }
+.searchBar {
+    margin: 8px 0 0 0;
+}
 #socksContainer {
     background-color: #f5f5f1;
 }
@@ -46,7 +52,6 @@ footer {
         text-align: right;
     }
 }
-
 .pushDown {
     margin-top: 15px;
 }

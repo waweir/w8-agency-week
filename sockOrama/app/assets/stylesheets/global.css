@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+body {
+  font-family: 'Lato', sans-serif;
+}
+
 .header {
   padding: 3vh;
   border-bottom: 2px solid #C22E14;
@@ -29,6 +33,10 @@
 
 .cartButton:hover {
   background-color: #C22E14;
+}
+
+.searchBar {
+  margin: 8px 0 0 0;
 }
 
 #socksContainer {

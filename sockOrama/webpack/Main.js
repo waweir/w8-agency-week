@@ -13,7 +13,7 @@ class Main extends React.Component {
                 </div>
                 <div className="col-xs-8 col-sm-4 text-center">
                     <form className="form-inline" role="search">
-                      <div className="form-group">
+                      <div className="form-group searchBar">
                         <input type="text" className="form-control" placeholder="Search" />
                       <button type="submit" className="btn btn-default">Submit</button>
                       </div>
@@ -33,20 +33,20 @@ class Main extends React.Component {
                 {this.props.children}
             </div>
             <footer className="row">
-                <div className="col-xs-1 col-xs-offset-5">
+                <div className="col-xs-9 text-center">
                     <img id="teamLogo" src="img/IWT-logo.jpg" alt="Worker's Logo" />
                 </div>
-                <div className="col-xs-1 col-xs-offset-3 pushDown">
+                <div className="col-xs-1 text-center pushDown">
                     <a href="#">
                         <div className="fa fa-facebook" aria-hidden="true"></div>
                     </a>
                 </div>
-                <div className="col-xs-1 pushDown">
+                <div className="col-xs-1 text-center pushDown">
                     <a href="#">
                         <div className="fa fa-twitter" aria-hidden="true"></div>
                     </a>
                 </div>
-                <div className="col-xs-1 pushDown">
+                <div className="col-xs-1 text-center pushDown">
                     <a href="#">
                         <div className="fa fa-pinterest-p" aria-hidden="true"></div>
                     </a>

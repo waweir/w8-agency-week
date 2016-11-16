@@ -80,7 +80,6 @@ class SockDisplay extends React.Component {
                       <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                       <span className="sr-only">Next</span>
                     </a>
-
                   </div>
                 </div>
               </div>
@@ -88,7 +87,7 @@ class SockDisplay extends React.Component {
 
 
           <div className="row">
-            <section className="col-xs-4 col-sm-3 panel panel-default panel-primary">
+            <section className="col-xs-5 col-sm-2 panel panel-default panel-primary">
               <ul className="list-unstyled">
                 <h4>Price</h4>
                 <div className="radio">
@@ -254,8 +253,8 @@ class SockDisplay extends React.Component {
                 </div>
               </ul>
             </section>
-            <div className="col-xs-8 col-sm-9">
-              <div className="col-xs-6 col-sm-4">
+            <div className="col-xs-7 col-sm-10">
+              <div className="col-xs-12 col-sm-4">
                 <div className="panel panel-default" onClick={this.openModal}>
                   <div className="panel-body">
                     <div className="row">
