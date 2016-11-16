@@ -25,6 +25,11 @@ footer {
 
 #cart-confirmation {
   display: inline-block;
+  font-size: 13px;
+}
+
+#cart-confirmation .justify-right {
+  text-align: right;
 }
 
 .pushDown {

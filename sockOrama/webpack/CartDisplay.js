@@ -316,14 +316,39 @@ class CartDisplay extends React.Component {
                     <h2>3. Confirm your order</h2>
                     <div className="well">
                         <div className="row">
-                            <div className="col-sm-3">
-                                <img src="http://www.unsplash.it/100?random" width="100" />
+                            <div className="col-sm-4">
+                                <img className="thumbnail" src="http://www.unsplash.it/100?random" width="100" />
                             </div>
-                            <div className="col-sm-3">
-                                test
+                            <div className="col-sm-4">
+                                <h5>ITEM NAME</h5>
+                                <p>Color:<strong> Color</strong></p>
+                                <label>qty </label>
+                                <select>
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                </select>
+                            </div>
+                            <div className="col-sm-4 justify-right verticle-bottom">
+                                <span>$0.00</span>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <p>Sub-total</p>
+                                <p>Shipping ($2/pair)</p>
+                                <p>Total</p>
+                            </div>
+                            <div className="col-sm-6 justify-right">
+                                <p>$0.00</p>
+                                <p>$0.00</p>
+                                <p>$0.00</p>
                             </div>
                         </div>
                     </div>
+                    <input type="checkbox" id="newsletter" name="newsletter" /><label htmlFor="newsletter">Like socks? Want newsletter?!</label>
                     <button className="btn btn-default btn-block">Purchase</button>
                 </div>
             </div>
