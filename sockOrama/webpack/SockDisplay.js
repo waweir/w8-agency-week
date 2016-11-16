@@ -20,6 +20,7 @@ class SockDisplay extends React.Component {
         this.state = {
             modalIsOpen: false,
             quantity: 10,
+            sizeSelection: '0'
         }
     }
     openModal() {
@@ -35,11 +36,15 @@ class SockDisplay extends React.Component {
             modalIsOpen:false
         })
     }
+    handleSizeChange(e) {
+      this.setState({
+        sizeSelection: e.target.value
+      })
+    }
 
     render() {
         return <main className="container">
             <div className="row">
-            <h1>Sock Display</h1>
             <section className="col-xs-4 col-sm-3 well">
                 <h4>Price</h4>
                 <div className="radio">
@@ -194,14 +199,14 @@ class SockDisplay extends React.Component {
                     <div className="panel panel-default" onClick={this.openModal}>
                         <div className="panel-body">
                             <div className="row">
-                                <img src="http://unsplash.it/300?random" width="100%"/>
+                                <img src="http://ecx.images-amazon.com/images/I/611Ov2M4vHL._AC_UL400_SR320,400_.jpg" width="100%"/>
                             </div>
                             <div className="row">
                                 <div className="col-sm-8">
-                                    <p>Name of Sock</p>
+                                    <p>Argyle</p>
                                 </div>
                                 <div className="col-sm-4 text-right">
-                                    <p>$20.00</p>
+                                    <p>$25.00</p>
                                 </div>
                             </div>
                         </div>
@@ -221,7 +226,8 @@ class SockDisplay extends React.Component {
           >
             <div className="row">
               <div className="col-xs-10">
-                <h2 ref="subtitle">Name of Sock</h2>
+                <h2 ref="subtitle">Argyle</h2>
+                <p className="lead small">Description (if one exists)</p>
               </div>
               <div className="col-xs-2 text-right">
                 <button className="btn btn-default" onClick={this.closeModal}>X</button>
@@ -229,13 +235,13 @@ class SockDisplay extends React.Component {
             </div>
             <div className="row">
             <div className="col-sm-6 text-center">
-              <img src="http://unsplash.it/300?random" width="100%"/>
+              <img src="http://ecx.images-amazon.com/images/I/611Ov2M4vHL._AC_UL400_SR320,400_.jpg" width="100%"/>
             </div>
             <div className="col-sm-6">
               <div className="form-group">
                 <label htmlFor="size">Size</label>
-                <select id="size" name="size" className="form-control">
-                  <option disabled selected> -- Select a size -- </option>
+                <select id="size" name="size" value={this.state.sizeSelection} className="form-control" onChange={this.handleSizeChange}>
+                  <option disabled value="0">-- Select a size --</option>
                   <option value="S">S</option>
                   <option value="M">M</option>
                   <option value="L">L</option>
@@ -246,15 +252,12 @@ class SockDisplay extends React.Component {
               </div>
               <div className="form-group">
                 <label htmlFor="quantity">Quantity</label>
-                <select id="quantity" name="quantity" className="form-control">
-                  <option disabled selected> -- Select a quantity -- </option>
-                  <option value="1">1</option>
-                </select>
+                <input className="form-control" type="number" name="quantity" id="quantity" step="1" min="1" defaultValue="1" max={this.state.quantity} pattern="[0-9]*" inputMode="numeric" />
               </div>
               <div>
-                <p>Color: sock color</p>
-                <p>Style: sock style</p>
-                <p>Material: sock material</p>
+                <p>Color: Various</p>
+                <p>Style: Dress</p>
+                <p>Material: Blended</p>
               </div>
             </div>
             </div>

@@ -316,10 +316,10 @@ class CartDisplay extends React.Component {
                     <h2>3. Confirm your order</h2>
                     <div className="well">
                         <div className="row">
-                            <div classname="col-sm-3">
+                            <div className="col-sm-3">
                                 <img src="http://www.unsplash.it/100?random" width="100" />
                             </div>
-                            <div classname="col-sm-3">
+                            <div className="col-sm-3">
                                 test
                             </div>
                         </div>

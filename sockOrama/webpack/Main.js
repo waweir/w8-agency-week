@@ -9,7 +9,6 @@ class Main extends React.Component {
         return <div>
             <div className="panel panel-default">
                 <div className="panel-body">
-                {/* Header with links to socks and cart. The socks link can maybe be the logo and the cart link can be the image of a cart */}
                 <div className="col-sm-4">
                 <Link to="/socks"><img alt="Brand" className="logo" src="img/sock-o-rama.png" /></Link>
                 </div>
@@ -34,7 +33,6 @@ class Main extends React.Component {
                 </div>
             </div>
             <div>
-                <p>This will display the child pages</p>
                 {this.props.children}
             </div>
             <footer className="row">
