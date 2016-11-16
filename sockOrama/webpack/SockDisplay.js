@@ -75,7 +75,8 @@ class SockDisplay extends React.Component {
                 <h4>Price</h4>
                 <div className="radio">
                   <label>
-                    <input type="radio" name="priceRadios" id="priceRadiosAnyPrice" value="anyPrice" checked/>
+                    <input type="radio" name="priceRadios" id="priceRadiosAnyPrice" value="anyPrice" />
+                    {/* TODO: add checked and onChange event */}
                     Any Price
                   </label>
                 </div>
