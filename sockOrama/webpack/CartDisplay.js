@@ -72,8 +72,8 @@ class CartDisplay extends React.Component {
                             <br />
                             <div className="col-sm-6">
                                 <label htmlFor="billingState">State</label>
-                                <select className="form-control">
-                                    <option disabled selected value>-Select State-</option>
+                                <select className="form-control" defaultValue="default">
+                                    <option disabled value="default">-Select State-</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
                                     <option value="AZ">Arizona</option>
@@ -182,8 +182,8 @@ class CartDisplay extends React.Component {
                                 <br />
                                 <div className="col-sm-6">
                                     <label htmlFor="shippingState">State</label>
-                                    <select className="form-control">
-                                        <option disabled selected value>-Select State-</option>
+                                    <select className="form-control" defaultValue="default">
+                                        <option disabled value="default">-Select State-</option>
                                         <option value="AL">Alabama</option>
                                         <option value="AK">Alaska</option>
                                         <option value="AZ">Arizona</option>
@@ -312,7 +312,7 @@ class CartDisplay extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="col-sm-4">
+                <div className="col-sm-4" id="cart-confirmation">
                     <h2>3. Confirm your order</h2>
                     <div className="well">
                         <div className="row">
