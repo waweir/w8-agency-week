@@ -1,3 +1,6 @@
 class SockSerializer < ActiveModel::Serializer
-  attributes :id, :name, :primary_color, :style, :size, :description, :price, :material
+  attributes :id, :name, :price, :description, :image, :featured
+  has_one :color
+  has_one :style
+  has_one :category
 end

@@ -2,8 +2,6 @@
 
 one:
   name: MyString
-  material: MyText
 
 two:
   name: MyString
-  material: MyText

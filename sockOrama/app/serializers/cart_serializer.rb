@@ -1,4 +1,3 @@
 class CartSerializer < ActiveModel::Serializer
-  attributes :id, :token, :address, :email, :customer, :complete
-  has_one :line_item
+  attributes :id, :token, :ship_to_address, :email, :customer, :complete
 end
