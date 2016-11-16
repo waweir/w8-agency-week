@@ -2,25 +2,65 @@
   box-sizing: border-box;
 }
 
-header {
-  width: 100%;
-  margin-bottom: 100px;
+body {
+  font-family: 'Lato', sans-serif;
 }
 
-header .navbar {
-  height: 2vh;
+.header {
+  padding: 3vh;
+  border-bottom: 2px solid #C22E14;
+  background-color: white;
+  box-shadow: 0px 2px 5px gray;
 }
 
 .logo {
-  width: 10vw;
+  width: 25vh;
 }
 
-footer {
-  position: sticky;
+.cartButton {
+  background-color: #1B7FFB;
+}
+
+.cartButton div {
+  color: white;
+  width: 50%;
+}
+
+.cartButton .badge {
+  color: white;
+  background-color: transparent;
+}
+
+.cartButton:hover {
+  background-color: #C22E14;
+}
+
+.searchBar {
+  margin: 8px 0 0 0;
+}
+
+#socksContainer {
+  background-color: #f5f5f1;
 }
 
 #teamLogo {
   width: 10vw;
+}
+
+footer {
+  background-color: white;
+  padding: 3vh;
+  border-top: 2px solid #C22E14;
+  box-shadow: 0px -2px 5px gray;
+}
+
+#cart-confirmation {
+  display: inline-block;
+  font-size: 13px;
+}
+
+#cart-confirmation .justify-right {
+  text-align: right;
 }
 
 .pushDown {
