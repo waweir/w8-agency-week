@@ -49,28 +49,45 @@ class SockDisplay extends React.Component {
     }
 
     render() {
-        return <main className="container">
-            <div className="row">
-              <div className="col-sm-3">
-              <h1> Featured Socks!</h1>
-              <div className="panel panel-default" onClick={this.openModal}>
-                  <div className="panel-body">
-                      <div className="row">
-                          <img src="http://unsplash.it/300?random" width="100%"/>
+        return <main className="container-fluid">
+              <div className="row">
+                <div className="col-sm-12">
+                  <h1 className="text-center">Featured Socks!</h1>
+                  <div id="featuredPhotos" className="carousel slide" data-ride="carousel">
+
+                    <ol className="carousel-indicators">
+                      <li data-target="#featuredPhotos" data-slide-to="0" className="active"></li>
+                      <li data-target="#featuredPhotos" data-slide-to="1"></li>
+                      <li data-target="#featuredPhotos" data-slide-to="2"></li>
+                    </ol>
+
+                    <div className="carousel-inner" role="listbox">
+                      <div className="item active">
+                        <img src="http://unsplash.it/1000/250?image=1" width="100%" alt="Photo" />
                       </div>
-                      <div className="row">
-                          <div className="col-sm-8">
-                              <p>Name of Sock</p>
-                          </div>
-                          <div className="col-sm-4 text-right">
-                              <p>$20.00</p>
-                          </div>
+                      <div className="item">
+                        <img src="http://unsplash.it/1000/250?image=2" width="100%" alt="Photo" />
                       </div>
+                      <div className="item">
+                        <img src="http://unsplash.it/1000/250?image=3" width="100%" alt="Photo" />
+                      </div>
+                    </div>
+                    <a className="left carousel-control" href="#featuredPhotos" role="button" data-slide="prev">
+                      <span className="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                      <span className="sr-only">Previous</span>
+                    </a>
+                    <a className="right carousel-control" href="#featuredPhotos" role="button" data-slide="next">
+                      <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                      <span className="sr-only">Next</span>
+                    </a>
+
                   </div>
+                </div>
               </div>
-            </div>
-            </div>
-            <div className="row">
+              <br />
+
+
+          <div className="row">
             <section className="col-xs-4 col-sm-3 panel panel-default panel-primary">
               <ul className="list-unstyled">
                 <h4>Price</h4>
@@ -106,176 +123,176 @@ class SockDisplay extends React.Component {
                   </label>
                 </div>
               </ul>
-                <hr />
+              <hr />
               <ul className="list-unstyled">
                 <h4>Size</h4>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="s" />
-                        S
-                    </label>
+                  <label>
+                    <input type="checkbox" value="s" />
+                    S
+                  </label>
                 </div>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="m" />
-                        M
-                    </label>
+                  <label>
+                    <input type="checkbox" value="m" />
+                    M
+                  </label>
                 </div>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="l" />
-                        L
-                    </label>
+                  <label>
+                    <input type="checkbox" value="l" />
+                    L
+                  </label>
                 </div>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="xl" />
-                        XL
-                    </label>
+                  <label>
+                    <input type="checkbox" value="xl" />
+                    XL
+                  </label>
                 </div>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="xxl" />
-                        XXL
-                    </label>
+                  <label>
+                    <input type="checkbox" value="xxl" />
+                    XXL
+                  </label>
                 </div>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="xxxl" />
-                        XXXL
-                    </label>
+                  <label>
+                    <input type="checkbox" value="xxxl" />
+                    XXXL
+                  </label>
                 </div>
               </ul>
-                <hr />
+              <hr />
               <ul className="list-unstyled">
                 <h4>Color</h4>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="grey" />
-                        Grey
-                    </label>
+                  <label>
+                    <input type="checkbox" value="grey" />
+                    Grey
+                  </label>
                 </div>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="cream" />
-                        Cream
-                    </label>
+                  <label>
+                    <input type="checkbox" value="cream" />
+                    Cream
+                  </label>
                 </div>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="brown" />
-                        Brown
-                    </label>
+                  <label>
+                    <input type="checkbox" value="brown" />
+                    Brown
+                  </label>
                 </div>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="black" />
-                        Black
-                    </label>
+                  <label>
+                    <input type="checkbox" value="black" />
+                    Black
+                  </label>
                 </div>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="charcoal" />
-                        Charcoal
-                    </label>
+                  <label>
+                    <input type="checkbox" value="charcoal" />
+                    Charcoal
+                  </label>
                 </div>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="various" />
-                        Various
-                    </label>
+                  <label>
+                    <input type="checkbox" value="various" />
+                    Various
+                  </label>
                 </div>
               </ul>
-                <hr />
+              <hr />
               <ul className="list-unstyled">
                 <h4>Material</h4>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="blended" />
-                        Blended
-                    </label>
+                  <label>
+                    <input type="checkbox" value="blended" />
+                    Blended
+                  </label>
                 </div>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="llama" />
-                        Llama
-                    </label>
+                  <label>
+                    <input type="checkbox" value="llama" />
+                    Llama
+                  </label>
                 </div>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="alpaca" />
-                        Alpaca
-                    </label>
+                  <label>
+                    <input type="checkbox" value="alpaca" />
+                    Alpaca
+                  </label>
                 </div>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="wool" />
-                        Wool
-                    </label>
+                  <label>
+                    <input type="checkbox" value="wool" />
+                    Wool
+                  </label>
                 </div>
               </ul>
-                <hr />
+              <hr />
               <ul className="list-unstyled">
                 <h4>Style</h4>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="crew" />
-                        Crew
-                    </label>
+                  <label>
+                    <input type="checkbox" value="crew" />
+                    Crew
+                  </label>
                 </div>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="dress" />
-                        Dress
-                    </label>
+                  <label>
+                    <input type="checkbox" value="dress" />
+                    Dress
+                  </label>
                 </div>
                 <div className="checkbox">
-                    <label>
-                        <input type="checkbox" value="knee" />
-                        Knee
-                    </label>
+                  <label>
+                    <input type="checkbox" value="knee" />
+                    Knee
+                  </label>
                 </div>
               </ul>
             </section>
             <div className="col-xs-8 col-sm-9">
-                <div className="col-xs-6 col-sm-4">
-                    <div className="panel panel-default" onClick={this.openModal}>
-                        <div className="panel-body">
-                            <div className="row">
-                                <img src="http://ecx.images-amazon.com/images/I/611Ov2M4vHL._AC_UL400_SR320,400_.jpg" width="100%"/>
-                            </div>
-                            <div className="row">
-                                <div className="col-sm-8">
-                                    <p>Argyle</p>
-                                </div>
-                                <div className="col-sm-4 text-right">
-                                    <p>$25.00</p>
-                                </div>
-                            </div>
-                        </div>
+              <div className="col-xs-6 col-sm-4">
+                <div className="panel panel-default" onClick={this.openModal}>
+                  <div className="panel-body">
+                    <div className="row">
+                      <img src="http://ecx.images-amazon.com/images/I/611Ov2M4vHL._AC_UL400_SR320,400_.jpg" width="100%"/>
                     </div>
+                    <div className="row">
+                      <div className="col-sm-8">
+                        <p>Argyle</p>
+                      </div>
+                      <div className="col-sm-4 text-right">
+                        <p>$25.00</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
+          </div>
 
-        {/* Begin modal */}
-        <div className="container">
-          <Modal
-            isOpen={this.state.modalIsOpen}
-            onAfterOpen={this.afterOpenModal}
-            onRequestClose={this.closeModal}
-            style={customStyles}
-            contentLabel="Sock Modal"
-          >
-            <div className="row">
-              <div className="col-xs-10">
-                <h2 ref="subtitle">Argyle</h2>
-                <p className="lead small">Description (if one exists)</p>
-              </div>
-              <div className="col-xs-2 text-right">
-                <button className="btn btn-default" onClick={this.closeModal}>X</button>
-              </div>
-            </div>
+          {/* Begin modal */}
+          <div className="container">
+            <Modal
+              isOpen={this.state.modalIsOpen}
+              onAfterOpen={this.afterOpenModal}
+              onRequestClose={this.closeModal}
+              style={customStyles}
+              contentLabel="Sock Modal"
+              >
+                <div className="row">
+                  <div className="col-xs-10">
+                    <h2 ref="subtitle">Argyle</h2>
+                    <p className="lead small">Description (if one exists)</p>
+                  </div>
+                  <div className="col-xs-2 text-right">
+                    <button className="btn btn-default" onClick={this.closeModal}>X</button>
+                  </div>
+                </div>
             <div className="row">
             <div className="col-sm-6 text-center">
               <img src="http://ecx.images-amazon.com/images/I/611Ov2M4vHL._AC_UL400_SR320,400_.jpg" width="100%"/>
@@ -312,7 +329,6 @@ class SockDisplay extends React.Component {
             </div>
           </Modal>
         </div>
-        {/* End modal */}
 
     </main>
 
