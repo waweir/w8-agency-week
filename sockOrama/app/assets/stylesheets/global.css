@@ -23,6 +23,10 @@ footer {
   width: 10vw;
 }
 
+#cart-confirmation {
+  display: inline-block;
+}
+
 .pushDown {
   margin-top: 15px;
 }
