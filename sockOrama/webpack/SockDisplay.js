@@ -45,8 +45,35 @@ class SockDisplay extends React.Component {
     render() {
         return <main className="container">
             <div className="row">
-            <section className="col-xs-4 col-sm-3 well">
+              <div className="col-sm-3">
+              <h1> Featured Socks!</h1>
+              <div className="panel panel-default" onClick={this.openModal}>
+                  <div className="panel-body">
+                      <div className="row">
+                          <img src="http://unsplash.it/300?random" width="100%"/>
+                      </div>
+                      <div className="row">
+                          <div className="col-sm-8">
+                              <p>Name of Sock</p>
+                          </div>
+                          <div className="col-sm-4 text-right">
+                              <p>$20.00</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            </div>
+            <div className="row">
+            <section className="col-xs-4 col-sm-3 panel panel-default panel-primary">
+              <ul className="list-unstyled">
                 <h4>Price</h4>
+                <div className="radio">
+                  <label>
+                    <input type="radio" name="priceRadios" id="priceRadiosAnyPrice" value="anyPrice" checked/>
+                    Any Price
+                  </label>
+                </div>
                 <div className="radio">
                   <label>
                     <input type="radio" name="priceRadios" id="priceRadiosUnder20" value="under20" />
@@ -71,7 +98,9 @@ class SockDisplay extends React.Component {
                     Over $40
                   </label>
                 </div>
+              </ul>
                 <hr />
+              <ul className="list-unstyled">
                 <h4>Size</h4>
                 <div className="checkbox">
                     <label>
@@ -109,7 +138,9 @@ class SockDisplay extends React.Component {
                         XXXL
                     </label>
                 </div>
+              </ul>
                 <hr />
+              <ul className="list-unstyled">
                 <h4>Color</h4>
                 <div className="checkbox">
                     <label>
@@ -147,7 +178,9 @@ class SockDisplay extends React.Component {
                         Various
                     </label>
                 </div>
+              </ul>
                 <hr />
+              <ul className="list-unstyled">
                 <h4>Material</h4>
                 <div className="checkbox">
                     <label>
@@ -173,7 +206,9 @@ class SockDisplay extends React.Component {
                         Wool
                     </label>
                 </div>
+              </ul>
                 <hr />
+              <ul className="list-unstyled">
                 <h4>Style</h4>
                 <div className="checkbox">
                     <label>
@@ -193,6 +228,7 @@ class SockDisplay extends React.Component {
                         Knee
                     </label>
                 </div>
+              </ul>
             </section>
             <div className="col-xs-8 col-sm-9">
                 <div className="col-xs-6 col-sm-4">
