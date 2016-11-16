@@ -10,12 +10,12 @@
   <script type="text/javascript" src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch"></script>
   <script src="https://use.fontawesome.com/9df289b211.js"></script>
   <%= stylesheet_link_tag    'application', media: 'all' %>
-  <%= javascript_include_tag *webpack_asset_paths('application', extension: 'js') %>
   <%= stylesheet_link_tag *webpack_asset_paths('application', extension: 'css') %>
 </head>
 <body>
   <div class="container">
     <div id="socks"></div>
   </div>
+  <%= javascript_include_tag *webpack_asset_paths('application', extension: 'js') %>
 </body>
 </html>
