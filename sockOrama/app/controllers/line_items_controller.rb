@@ -1,7 +1,6 @@
 class LineItemsController < ApplicationController
 
   def create
-
     if params[:token]
       @line_item = LineItem.new(
         size_id:      params[:size_id],
@@ -15,19 +14,17 @@ class LineItemsController < ApplicationController
         cart:         Cart.new
       )
     end
-
     if @line_item.save
       render json: @line_item, include: 'size.sock'
     else
       render json: @line_item.errors.full_messages, status: :unprocessable_entity
     end
-
   end
 
-  def update
-    @line_item = LineItem.find(params :id)
-    @line_item.
-  end
+  # def update
+  #   @line_item = LineItem.find(params :id)
+  #   @line_item.
+  # end
 
   def destroy
     @line_item = LineItem.find(params :id)
