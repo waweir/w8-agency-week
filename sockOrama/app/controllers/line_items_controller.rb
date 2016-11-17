@@ -24,6 +24,16 @@ class LineItemsController < ApplicationController
 
   end
 
+  def update
+    @line_item = LineItem.find(params :id)
+    @line_item.
+  end
+
+  def destroy
+    @line_item = LineItem.find(params :id)
+    @line_item.destroy!
+    render json: 'Item removed!'
+  end
 
   def line_item_price
     size_price = Sock.find(sock_id).price

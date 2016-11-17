@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :charges, only: [:create]
   resources :carts
   post '/add_to_cart' => 'line_items#create'
+  get '/view_cart' => 'carts#show'
   resources :socks do
     collection do
       get :filter

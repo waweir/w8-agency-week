@@ -11,7 +11,7 @@ class CartsController < ApplicationController
 
   def show
     @cart = Cart.find_by(token: params[:token])
-    render json: @cart.line_items
+    render json: [@cart.line_items, @cart.subtotal]
   end
 
   def update
@@ -25,7 +25,6 @@ class CartsController < ApplicationController
   def destroy
     @cart = Cart.find_by(token: params[:token])
     @cart.line_items.destroy!
-    render json:  { 'Items removed.' }
   end
 
 end
