@@ -3,4 +3,5 @@ class SockSerializer < ActiveModel::Serializer
   has_one :color
   has_one :style
   has_one :category
+  has_many :sizes
 end
