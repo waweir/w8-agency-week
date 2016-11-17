@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'socks#static'
   resources :charges, only: [:create]
   resources :carts
+  post '/add_to_cart' => 'line_items#create'
   resources :socks do
     collection do
       get :filter
