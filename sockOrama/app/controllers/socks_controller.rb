@@ -8,12 +8,24 @@ class SocksController < ApplicationController
   def static
   end
 
+  def filter
+    @socks = Sock.all
+    if params[:search]
+      @socks = @socks.search_full_text(params[:search])
+    end
+    if params[:filter]
+      @socks = @socks.ransack(params[:filter]).result
+    end
+    # @socks = @socks.to_a.uniq
+    render json: @socks
+  end
+
   def create
-    @sock = Sock.new(params: [:name, :primary_color, :style, :size, :price, :material, :category])
+    @sock = Sock.new(sock_params)
     if @sock.save
       render json: @sock
     else
-      render json: @sock.errors
+      render json: @sock.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -24,7 +36,8 @@ class SocksController < ApplicationController
 
 private
 
-
-
+  def sock_params
+    params.permit(:name, :primary_color, :style, :size, :price, :material, :category)
+  end
 
 end
