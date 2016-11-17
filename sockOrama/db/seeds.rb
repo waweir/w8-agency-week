@@ -17,13 +17,13 @@ blend = session.spreadsheet_by_key("1m_x4ZtQzTHYldutf_i90uXSfKfEjFXSPvyV_L58nDJ0
   blend[row, 5].split(",").collect(&:strip).each do |s|
     Size.create!(
       abbr:  s.match(/[A-Z]/i)[0],
-      in_stock: s.match(/\d/)[0].to_i,
+      in_stock: s.match(/\d+/)[0].to_i,
       sock:   Sock.create!(
           name: blend[row, 1],
           color: Color.where(name: blend[row, 2]).first_or_create!,
           style: Style.where(name: blend[row, 3]).first_or_create!,
           category: Category.where(name: blend.title).first_or_create!,
-          price: (blend[row, 6].match(/\d/)[0]).to_i * 100,
+          price: blend[row, 6].gsub(/\D+/, "").to_i * 100,
           description: blend[row, 8],
           remote_image_url: blend[row, 7]
           )
@@ -46,7 +46,7 @@ llama = session.spreadsheet_by_key("1m_x4ZtQzTHYldutf_i90uXSfKfEjFXSPvyV_L58nDJ0
           color: Color.where(name: llama[row, 2]).first_or_create!,
           style: Style.where(name: llama[row 3]).first_or_create!,
           category: Category.where(name: llama.title).first_or_create!,
-          price: (llama[row, 6].match(/\d/)[0]).to_i * 100,
+          price: llama[row, 6].gsub(/\D+/, "").to_i * 100,
           description: llama[row, 9],
           remote_image_url: llama[row, 7]
           )
@@ -68,7 +68,7 @@ alpaca = session.spreadsheet_by_key("1m_x4ZtQzTHYldutf_i90uXSfKfEjFXSPvyV_L58nDJ
           color: Color.where(name: alpaca[2, row]).first_or_create!,
           style: Style.where(name: alpaca[3, row]).first_or_create!,
           category: Category.where(name: alpaca.title).first_or_create!,
-          price: (alpaca[6, row].match(/\d/)[0]).to_i * 100,
+          price: alpaca[6, row].gsub(/\D+/, "").to_i * 100,
           description: alpaca[8, row],
           remote_image_url: alpaca[7, row]
           )
@@ -90,7 +90,7 @@ wool = session.spreadsheet_by_key("1m_x4ZtQzTHYldutf_i90uXSfKfEjFXSPvyV_L58nDJ0"
           color: Color.where(name: wool[2, row]).first_or_create!,
           style: Style.where(name: wool[3, row]).first_or_create!,
           category: Category.where(name: wool.title).first_or_create!,
-          price: (wool[6, row].match(/\d/)[0]).to_i * 100,
+          price: wool[6, row].gsub(/\D+/, "").to_i * 100,
           description: wool[8, row],
           remote_image_url: wool[7, row]
           )

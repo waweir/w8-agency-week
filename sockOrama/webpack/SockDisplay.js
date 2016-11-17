@@ -26,19 +26,24 @@ class SockDisplay extends React.Component {
         }
     }
     componentDidMount() {
-      fetch('/socks')
-      .then(response => response.json())
-      .then((response) => {
-        console.log(response.socks)
-        this.setState({
-          socks: response.socks
-        })
-      })
+      // fetch('/socks')
+      // .then(response => response.json())
+      // .then((response) => {
+      //   console.log(response.socks)
+      //   this.setState({
+      //     socks: response.socks
+      //   })
+        // document.querySelector('.item').classList.add('active')
+        // document.querySelector('.carousel-indicators > li').classList.add('active')
+        // document.querySelector('input[name="priceRadios"]:first-child').checked = true
+      // })
+      document.querySelector('input[name="priceRadios"]:first-child').checked = true
     }
     openModal() {
         this.setState({
             modalIsOpen: true
         })
+        document.querySelector('.carousel-indicators').classList.add('hidden')
     }
     afterOpenModal() {
 
@@ -47,6 +52,22 @@ class SockDisplay extends React.Component {
         this.setState({
             modalIsOpen:false
         })
+        document.querySelector('.carousel-indicators').classList.remove('hidden')
+    }
+    handleFilterChange(e) {
+      // TODO: add fetch call with values
+      var price = document.querySelector('input[name="priceRadios"]:checked')
+      var size = []
+      if (e.target.name === 'priceRadios') {
+        price.checked = false
+        e.target.checked = true
+        console.log('target value: ' + e.target.value)
+        console.log('price value: ' + price.value)
+      } else if (e.target.name === 'sizeCheckbox') {
+        document.querySelectorAll('input[name="sizeCheckbox"]:checked').forEach(function(check) {
+          size.push(check.value)
+        })
+      }
     }
     handleSizeChange(e) {
       this.setState({
@@ -57,13 +78,14 @@ class SockDisplay extends React.Component {
       this.setState({
         quantity: e.target.value
       })
+      console.log(this.state.quantity)
     }
 
     render() {
       var socksArray = []
       var socksId = []
       var socks = this.state.socks.map((sock, i) => {
-        if (socksId.indexOf(sock.name) === -1) {
+        if (sock.featured === false && socksId.indexOf(sock.name) === -1) {
           socksId.push(sock.name)
           socksArray.push(sock)
         }
@@ -87,217 +109,238 @@ class SockDisplay extends React.Component {
           </div>
         </div>
       })
+
+      var featuredSocks = this.state.socks.map((sock, i) => {
+        if (sock.featured === true) {
+          return <div className="item" key={i}>
+            <img src="http://unsplash.it/1000/250?random" width="100%" alt="{sock.name}"/>
+            <div className="carousel-caption">
+              <h4>{sock.name}</h4>
+            </div>
+          </div>
+        } else {
+          return <div className="item" key={i}>
+            <img src="http://robohash.org/socks" alt="random robohash" />
+            <div className="carousel-caption">
+              <h4>... No featured socks, just Robohash ...</h4>
+            </div>
+          </div>
+        }
+      })
+      var featuredSocksIndicators = this.state.socks.map((sock, i) => {
+        if (sock.featured === true) {
+          return <li data-target="#featuredSocks" data-slide-to="{i}" key={i}></li>
+        } else {
+          return <li data-target="#featuredSocks" data-slide-to="{i}" key={i}></li>
+        }
+      })
         return <main className="container-fluid">
+          {/* Start Featured Socks  */}
               <div className="row">
                 <div className="col-sm-12">
                   <h1 className="text-center">Featured Socks!</h1>
-                  <div id="featuredPhotos" className="carousel slide" data-ride="carousel">
+                  <div id="featuredSocks" className="carousel slide" data-ride="carousel">
+                    {/* Indicators */}
                     <ol className="carousel-indicators">
-                      <li data-target="#featuredPhotos" data-slide-to="0" className="active"></li>
-                      <li data-target="#featuredPhotos" data-slide-to="1"></li>
-                      <li data-target="#featuredPhotos" data-slide-to="2"></li>
+                      {featuredSocksIndicators}
                     </ol>
-
+                    {/* Wrapper for slides */}
                     <div className="carousel-inner" role="listbox">
-                      <div className="item active">
-                        <img src="http://unsplash.it/1000/250?image=1" width="100%" alt="Photo" />
-                      </div>
-                      <div className="item">
-                        <img src="http://unsplash.it/1000/250?image=2" width="100%" alt="Photo" />
-                      </div>
-                      <div className="item">
-                        <img src="http://unsplash.it/1000/250?image=3" width="100%" alt="Photo" />
-                      </div>
+                      {featuredSocks}
                     </div>
-                    <a className="left carousel-control" href="#featuredPhotos" role="button" data-slide="prev">
+                    {/* Controls */}
+                    <a className="left carousel-control" href="#featuredSocks" role="button" data-slide="prev">
                       <span className="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                       <span className="sr-only">Previous</span>
                     </a>
-                    <a className="right carousel-control" href="#featuredPhotos" role="button" data-slide="next">
+                    <a className="right carousel-control" href="#featuredSocks" role="button" data-slide="next">
                       <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                       <span className="sr-only">Next</span>
                     </a>
                   </div>
                 </div>
               </div>
-              <br />
-
-
-          <div className="row">
-            <section className="col-xs-5 col-sm-2 panel panel-default">
-              <div className="panel-body">
-                <ul className="list-unstyled">
-                  <h4>Price</h4>
-                  <div className="radio">
-                    <label>
-                      <input type="radio" name="priceRadios" id="priceRadiosAnyPrice" value="anyPrice" />
-                      {/* TODO: add checked and onChange event */}
-                      Any Price
-                    </label>
-                  </div>
-                  <div className="radio">
-                    <label>
-                      <input type="radio" name="priceRadios" id="priceRadiosUnder20" value="under20" />
-                      Under $20
-                    </label>
-                  </div>
-                  <div className="radio">
-                    <label>
-                      <input type="radio" name="priceRadios" id="priceRadios20To30" value="20To30" />
-                      $20 to $30
-                    </label>
-                  </div>
-                  <div className="radio">
-                    <label>
-                      <input type="radio" name="priceRadios" id="priceRadios30To40" value="30To40" />
-                      $30 to $40
-                    </label>
-                  </div>
-                  <div className="radio">
-                    <label>
-                      <input type="radio" name="priceRadios" id="priceRadiosOver40" value="over40" />
-                      Over $40
-                    </label>
-                  </div>
-                </ul>
-                <hr />
-                <ul className="list-unstyled">
-                  <h4>Size</h4>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="s" />
-                      S
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="m" />
-                      M
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="l" />
-                      L
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="xl" />
-                      XL
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="xxl" />
-                      XXL
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="xxxl" />
-                      XXXL
-                    </label>
-                  </div>
-                </ul>
-                <hr />
-                <ul className="list-unstyled">
-                  <h4>Color</h4>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="grey" />
-                      Grey
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="cream" />
-                      Cream
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="brown" />
-                      Brown
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="black" />
-                      Black
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="charcoal" />
-                      Charcoal
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="various" />
-                      Various
-                    </label>
-                  </div>
-                </ul>
-                <hr />
-                <ul className="list-unstyled">
-                  <h4>Material</h4>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="blended" />
-                      Blended
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="llama" />
-                      Llama
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="alpaca" />
-                      Alpaca
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="wool" />
-                      Wool
-                    </label>
-                  </div>
-                </ul>
-                <hr />
-                <ul className="list-unstyled">
-                  <h4>Style</h4>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="crew" />
-                      Crew
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="dress" />
-                      Dress
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="knee" />
-                      Knee
-                    </label>
-                  </div>
-                </ul>
-              </div>
-            </section>
-            <section>
-              <div className="col-xs-7 col-sm-10">
-                {displaySocks}
-              </div>
-            </section>
-          </div>
+            {/* End Featured Socs */}
+            <br />
+            <div className="row">
+            {/* Start Filter Panel */}
+              <section className="col-xs-5 col-sm-2 panel panel-default">
+                <div className="panel-body">
+                  <ul className="list-unstyled">
+                    <h4>Price</h4>
+                    <div className="radio">
+                      <label>
+                        <input type="radio" name="priceRadios" id="priceRadiosAnyPrice" value="anyPrice" onChange={this.handleFilterChange}/>
+                        {/* TODO: add checked and onChange event */}
+                        Any Price
+                      </label>
+                    </div>
+                    <div className="radio">
+                      <label>
+                        <input type="radio" name="priceRadios" id="priceRadiosUnder20" value="under20" onChange={this.handleFilterChange}/>
+                        Under $20
+                      </label>
+                    </div>
+                    <div className="radio">
+                      <label>
+                        <input type="radio" name="priceRadios" id="priceRadios20To30" value="20To30" onChange={this.handleFilterChange}/>
+                        $20 to $30
+                      </label>
+                    </div>
+                    <div className="radio">
+                      <label>
+                        <input type="radio" name="priceRadios" id="priceRadios30To40" value="30To40" onChange={this.handleFilterChange}/>
+                        $30 to $40
+                      </label>
+                    </div>
+                    <div className="radio">
+                      <label>
+                        <input type="radio" name="priceRadios" id="priceRadiosOver40" value="over40" onChange={this.handleFilterChange}/>
+                        Over $40
+                      </label>
+                    </div>
+                  </ul>
+                  <hr />
+                  <ul className="list-unstyled">
+                    <h4>Size</h4>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="s" name="sizeCheckbox" onChange={this.handleFilterChange} />
+                        S
+                      </label>
+                    </div>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="m" name="sizeCheckbox" onChange={this.handleFilterChange} />
+                        M
+                      </label>
+                    </div>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="l" name="sizeCheckbox" onChange={this.handleFilterChange} />
+                        L
+                      </label>
+                    </div>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="xl" name="sizeCheckbox" onChange={this.handleFilterChange} />
+                        XL
+                      </label>
+                    </div>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="xxl" name="sizeCheckbox" onChange={this.handleFilterChange} />
+                        XXL
+                      </label>
+                    </div>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="xxxl" name="sizeCheckbox" onChange={this.handleFilterChange} />
+                        XXXL
+                      </label>
+                    </div>
+                  </ul>
+                  <hr />
+                  <ul className="list-unstyled">
+                    <h4>Color</h4>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="grey" />
+                        Grey
+                      </label>
+                    </div>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="cream" />
+                        Cream
+                      </label>
+                    </div>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="brown" />
+                        Brown
+                      </label>
+                    </div>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="black" />
+                        Black
+                      </label>
+                    </div>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="charcoal" />
+                        Charcoal
+                      </label>
+                    </div>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="various" />
+                        Various
+                      </label>
+                    </div>
+                  </ul>
+                  <hr />
+                  <ul className="list-unstyled">
+                    <h4>Material</h4>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="blended" />
+                        Blended
+                      </label>
+                    </div>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="llama" />
+                        Llama
+                      </label>
+                    </div>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="alpaca" />
+                        Alpaca
+                      </label>
+                    </div>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="wool" />
+                        Wool
+                      </label>
+                    </div>
+                  </ul>
+                  <hr />
+                  <ul className="list-unstyled">
+                    <h4>Style</h4>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="crew" />
+                        Crew
+                      </label>
+                    </div>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="dress" />
+                        Dress
+                      </label>
+                    </div>
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" value="knee" />
+                        Knee
+                      </label>
+                    </div>
+                  </ul>
+                </div>
+              </section>
+              {/* End Filter Panel */}
+              {/* Start Grid Display */}
+              <section>
+                <div className="col-xs-7 col-sm-10">
+                  {displaySocks}
+                </div>
+              </section>
+              {/* End Grid Display */}
+            </div>
 
           {/* Begin modal */}
           <div className="container">
