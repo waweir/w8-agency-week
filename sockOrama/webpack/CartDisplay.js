@@ -16,6 +16,7 @@ class CartDisplay extends React.Component {
          billingAddress: "",
          billingAddressAdditional: "",
          billingCity: "",
+         billingState: "",
          billingZipcode: "",
          shippingFirstName: "",
          shippingLastName: "",
@@ -23,17 +24,36 @@ class CartDisplay extends React.Component {
          shippingAddress: "",
          shippingAddressAdditional: "",
          shippingCity: "",
+         shippingState: "",
          shippingZipcode: "",
+         cardType: "",
          paymentCardNumber: "",
          paymentCardHolderName: "",
+         paymentExpirationMonth: "",
+         paymentExpirationYear: "",
          paymentVerificationNumber: "",
+         socks: [],
 
       }
       this.handleChange = this.handleChange.bind(this)
       this.submitOrder = this.submitOrder.bind(this)
+      this.calculateSubtotal = this.calculateSubtotal.bind(this)
+      this.calculateShipping = this.calculateShipping.bind(this)
+      this.calculateTotal = this.calculateTotal.bind(this)
    }
    componentDidMount() {
       attachSharedState(this)
+
+      fetch('http://localhost:5000/socks')
+      .then(response => response.json())
+      // .then(response => console.log(response))
+      .then(response => {
+         console.log(response.socks)
+         this.setState ({
+            socks: response.socks
+         })
+
+      })
    }
    componentWillUnmount() {
       detachSharedState(this)
@@ -48,6 +68,12 @@ class CartDisplay extends React.Component {
    }
    submitOrder() {
       var data = new FormData()
+
+      if (this.state.checked === true) {
+         this.setState({
+
+         })
+      }
       // data.append('billingFirstName', this.state.billingFirstName)
       console.log(document.getElementById('email').value)
       console.log(document.getElementById('billingFirstName').value)
@@ -68,12 +94,13 @@ class CartDisplay extends React.Component {
       console.log(document.getElementById('paymentCardHolderName').value)
       console.log(document.getElementById('paymentVerificationNumber').value)
       data.append('email', document.getElementById('email').value)
-      data.append('billingLastName', document.getElementById('billingLastName').value)
+      data.append('billingFirstName', document.getElementById('billingFirstName').value)
       data.append('billingLastName', document.getElementById('billingLastName').value)
       data.append('billingTelephone', document.getElementById('billingTelephone').value)
       data.append('billingAddress', document.getElementById('billingAddress').value)
       data.append('billingAddressAdditional', document.getElementById('billingAddressAdditional').value)
       data.append('billingCity', document.getElementById('billingCity').value)
+      data.append('billingState', document.getElementById('billingState').value)
       data.append('billingZipcode', document.getElementById('billingZipcode').value)
       data.append('shippingFirstName', document.getElementById('shippingFirstName').value)
       data.append('shippingLastName', document.getElementById('shippingLastName').value)
@@ -95,10 +122,63 @@ class CartDisplay extends React.Component {
       // })
       // .then(response => response.json())
       // .then() // fire off a post submit operation with the response
+   }
 
+   calculateSubtotal () {
+
+   }
+
+   calculateShipping() {
+
+   }
+
+   calculateTotal() {
 
    }
    render() {
+      var socksArray = []
+      var socksId = []
+      var orderSubtotal = 0
+      var orderTax = 0
+      var orderTaxRate = .07
+      var orderShipping = 0
+      // var orderShipping = socksArray.length * 2
+      var orderTotal = orderShipping + orderSubtotal
+      // var orderTotal = 0
+      var socks = this.state.socks.map((sock, i) => {
+         //   if (socksId.indexOf(sock.name) === -1) {
+         if (socksId.indexOf(sock.name) === -1) {
+            socksId.push(sock.name)
+            socksArray.push(sock)
+            orderSubtotal += sock.price
+            orderShipping += 2
+            //  orderTotal += orderShipping + orderSubtotal
+         }
+      })
+      orderTax = Math.round((orderSubtotal * orderTaxRate), 2)
+      orderTotal = orderSubtotal + orderShipping + orderTax
+
+      console.log(socksArray)
+      var displayOrder = socksArray.map((sock, i) => { //Showing socks now, change to cart API fetch when available
+         return  <div className="col-sm-12" key={i}>
+            <div className="panel panel-default">
+               <div className="panel-body sock-panel">
+                  <div className="row">
+                     <div className="col-sm-4">
+                        <img src="http://unsplash.it/100?random" width="100"/>
+                     </div>
+                     <div className="col-sm-2">
+                        <p>{sock.name}</p>
+                     </div>
+                     <div className="col-sm-6 text-right">
+                        <p>{sock.price}</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      })
+
       // Hide/Show Shipping Address when checkbox marked
       const content = this.state.checked ? null : <div className="">
          <h2>Shipping Address</h2>
@@ -144,7 +224,7 @@ class CartDisplay extends React.Component {
                <br />
                <div className="col-sm-6">
                   <label htmlFor="shippingState">State</label>
-                  <select className="form-control" defaultValue="default">
+                  <select id="shippingState" name="shippingState" className="form-control" defaultValue="default">
                      <option disabled value="default">-Select State-</option>
                      <option value="AL">Alabama</option>
                      <option value="AK">Alaska</option>
@@ -207,7 +287,7 @@ class CartDisplay extends React.Component {
          </div>
       </div>;
 
-      return <div className="container">
+      return <div className="container checkout">
          {/* whoever works on this can decide if the cart display and billing and shipping panel need to be 2 separate components that are displayed through this render function, or if they are just defined here */}
          <div className="row">
             <h1>Checkout</h1>
@@ -264,7 +344,7 @@ class CartDisplay extends React.Component {
                      <br />
                      <div className="col-sm-6">
                         <label htmlFor="billingState">State</label>
-                        <select className="form-control" defaultValue="default">
+                        <select id="billingState" name="billingState" className="form-control" defaultValue="default">
                            <option disabled value="default">-Select State-</option>
                            <option value="AL">Alabama</option>
                            <option value="AK">Alaska</option>
@@ -338,7 +418,7 @@ class CartDisplay extends React.Component {
                   <div className="row">
                      <div className="col-sm-12">
                         <label htmlFor="cardType">Card Type</label>
-                        <select className="form-control">
+                        <select id="cardType" name="cardType" className="form-control">
                            <option value="visa">Visa</option>
                            <option value="mastercard">Mastercard</option>
                            <option value="amex">American Express</option>
@@ -362,7 +442,7 @@ class CartDisplay extends React.Component {
                      <div className="row">
                         <div className="col-sm-6">
                            <label htmlFor="paymentExpirationMonth">Exp Month</label>
-                           <select className="form-control">
+                           <select id="paymentExpirationMonth" name="paymentExpirationMonth" className="form-control">
                               <option value="01">01-January</option>
                               <option value="02">02-February</option>
                               <option value="03">03-March</option>
@@ -379,7 +459,7 @@ class CartDisplay extends React.Component {
                         </div>
                         <div className="col-sm-6">
                            <label htmlFor="paymentExpirationYear">Exp Year</label>
-                           <select className="form-control">
+                           <select id="paymentExpirationYear" name="paymentExpirationYear" className="form-control">
                               <option value="2016">2016</option>
                               <option value="2017">2017</option>
                               <option value="2018">2018</option>
@@ -403,40 +483,43 @@ class CartDisplay extends React.Component {
                <h2>3. Confirm your order</h2>
                <div className="well">
                   <div className="row">
-                     <div className="col-sm-4">
+                     {/* <div className="col-sm-4">
                         <img className="thumbnail" src="http://www.unsplash.it/100?random" width="100" />
                      </div>
-                     <div className="col-sm-4">
-                        <h5>ITEM NAME</h5>
+                     <div className="col-sm-4"> */}
+                     { displayOrder }
+                     {/* <h5>ITEM NAME</h5>
                         <p>Color:<strong> Color</strong></p>
                         <label>qty </label>
                         <select>
-                           <option value="01">01</option>
-                           <option value="02">02</option>
-                           <option value="03">03</option>
-                           <option value="04">04</option>
-                           <option value="05">05</option>
-                        </select>
-                     </div>
-                     <div className="col-sm-4 justify-right verticle-bottom">
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                     </select> */}
+                     {/* </div> */}
+                     {/* <div className="col-sm-4 justify-right verticle-bottom">
                         <span>$0.00</span>
-                     </div>
+                     </div> */}
                   </div>
                   <div className="row">
                      <div className="col-sm-6">
                         <p>Sub-total</p>
+                        <p>Tax (7%)</p>
                         <p>Shipping ($2/pair)</p>
                         <p>Total</p>
                      </div>
                      <div className="col-sm-6 justify-right">
-                        <p>$0.00</p>
-                        <p>$0.00</p>
-                        <p>$0.00</p>
+                        <p>{ orderSubtotal }</p>
+                        <p>{ orderTax }</p>
+                        <p>{ orderShipping }</p>
+                        <p>{ orderTotal }</p>
                      </div>
                   </div>
                </div>
                <input type="checkbox" id="newsletter" name="newsletter" /><label htmlFor="newsletter">Like socks? Want newsletter?!</label>
-               <button className="btn btn-default btn-block" onClick={this.submitOrder}>Purchase</button>
+               <button className="btn btn-success btn-block" onClick={this.submitOrder}>Purchase</button>
             </div>
          </div>
       </div>
