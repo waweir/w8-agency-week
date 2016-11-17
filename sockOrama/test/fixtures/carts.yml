@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  token: MyString
+  ship_to_address: MyString
+  email: MyString
+  customer: MyString
+  complete: false
+
+two:
+  token: MyString
+  ship_to_address: MyString
+  email: MyString
+  customer: MyString
+  complete: false

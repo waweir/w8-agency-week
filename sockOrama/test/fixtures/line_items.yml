@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  size: one
+  cart: one
+  num_ordered: 1
+
+two:
+  size: two
+  cart: two
+  num_ordered: 1
