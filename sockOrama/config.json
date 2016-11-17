@@ -1,9 +1,9 @@
 {
-  "client_id": "google_drive_id",
-  "client_secret": "google_drive_secret",
+  "client_id": "ID",
+  "client_secret": "secret",
   "scope": [
     "https://www.googleapis.com/auth/drive",
     "https://spreadsheets.google.com/feeds/"
   ],
-  "refresh_token": "google_refresh_token"
+  "refresh_token": "refresh"
 }
