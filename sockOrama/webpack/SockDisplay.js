@@ -26,18 +26,17 @@ class SockDisplay extends React.Component {
         }
     }
     componentDidMount() {
-      // fetch('/socks')
-      // .then(response => response.json())
-      // .then((response) => {
-      //   console.log(response.socks)
-      //   this.setState({
-      //     socks: response.socks
-      //   })
-        // document.querySelector('.item').classList.add('active')
-        // document.querySelector('.carousel-indicators > li').classList.add('active')
-        // document.querySelector('input[name="priceRadios"]:first-child').checked = true
-      // })
-      document.querySelector('input[name="priceRadios"]:first-child').checked = true
+      fetch('/socks')
+      .then(response => response.json())
+      .then((response) => {
+        console.log(response.socks)
+        this.setState({
+          socks: response.socks
+        })
+        document.querySelector('.item').classList.add('active')
+        document.querySelector('.carousel-indicators > li').classList.add('active')
+        document.querySelector('input[name="priceRadios"]:first-child').checked = true
+      })
     }
     openModal() {
         this.setState({
@@ -67,6 +66,7 @@ class SockDisplay extends React.Component {
         document.querySelectorAll('input[name="sizeCheckbox"]:checked').forEach(function(check) {
           size.push(check.value)
         })
+        console.log(size)
       }
     }
     handleSizeChange(e) {
