@@ -1,17 +1,8 @@
 class CartsController < ApplicationController
 
-  # def create
-  #   @cart = Cart.new(cart_params)
-  #   if @cart.save
-  #     render json: @cart
-  #   else
-  #     render json: @cart.errors.full_messages, status: :unprocessable_entity
-  #   end
-  # end
-
   def show
     @cart = Cart.find_by(token: params[:token])
-    render json: [@cart.line_items, @cart.subtotal, @cart.tax, @cart.shipping, @cart.total]
+    render json: [@cart.line_items, subtotal: @cart.subtotal, tax: @cart.tax, shipping: @cart.shipping, total: @cart.total]
   end
 
   def update
