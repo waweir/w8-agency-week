@@ -33,6 +33,18 @@ body {
 .searchBar {
     margin: 8px 0 0 0;
 }
+.sock-panel {
+    padding-top: 0;
+    padding-bottom: 0;
+    img {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+    p {
+        margin: 0;
+        padding: 10px 0;
+    }
+}
 #socksContainer {
     background-color: #f5f5f1;
 }
@@ -54,4 +66,7 @@ footer {
 }
 .pushDown {
     margin-top: 15px;
+}
+.hidden {
+    display: none;
 }
