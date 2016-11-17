@@ -2,11 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.4
--- Dumped by pg_dump version 9.5.4
+-- Dumped from database version 9.6.1
+-- Dumped by pg_dump version 9.6.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -318,63 +319,63 @@ ALTER SEQUENCE styles_id_seq OWNED BY styles.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: carts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY carts ALTER COLUMN id SET DEFAULT nextval('carts_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: categories id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY categories ALTER COLUMN id SET DEFAULT nextval('categories_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: colors id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY colors ALTER COLUMN id SET DEFAULT nextval('colors_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: line_items id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY line_items ALTER COLUMN id SET DEFAULT nextval('line_items_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: refile_attachments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY refile_attachments ALTER COLUMN id SET DEFAULT nextval('refile_attachments_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: sizes id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sizes ALTER COLUMN id SET DEFAULT nextval('sizes_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: socks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY socks ALTER COLUMN id SET DEFAULT nextval('socks_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: styles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY styles ALTER COLUMN id SET DEFAULT nextval('styles_id_seq'::regclass);
 
 
 --
--- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ar_internal_metadata
@@ -382,7 +383,7 @@ ALTER TABLE ONLY ar_internal_metadata
 
 
 --
--- Name: carts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: carts carts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY carts
@@ -390,7 +391,7 @@ ALTER TABLE ONLY carts
 
 
 --
--- Name: categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY categories
@@ -398,7 +399,7 @@ ALTER TABLE ONLY categories
 
 
 --
--- Name: colors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: colors colors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY colors
@@ -406,7 +407,7 @@ ALTER TABLE ONLY colors
 
 
 --
--- Name: line_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: line_items line_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY line_items
@@ -414,7 +415,7 @@ ALTER TABLE ONLY line_items
 
 
 --
--- Name: refile_attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: refile_attachments refile_attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY refile_attachments
@@ -422,7 +423,7 @@ ALTER TABLE ONLY refile_attachments
 
 
 --
--- Name: schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY schema_migrations
@@ -430,7 +431,7 @@ ALTER TABLE ONLY schema_migrations
 
 
 --
--- Name: sizes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: sizes sizes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sizes
@@ -438,7 +439,7 @@ ALTER TABLE ONLY sizes
 
 
 --
--- Name: socks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: socks socks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY socks
@@ -446,7 +447,7 @@ ALTER TABLE ONLY socks
 
 
 --
--- Name: styles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: styles styles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY styles
@@ -510,7 +511,7 @@ CREATE INDEX index_socks_on_style_id ON socks USING btree (style_id);
 
 
 --
--- Name: fk_rails_278af9e628; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: socks fk_rails_278af9e628; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY socks
@@ -518,7 +519,7 @@ ALTER TABLE ONLY socks
 
 
 --
--- Name: fk_rails_a1e35bcaf6; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: line_items fk_rails_a1e35bcaf6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY line_items
@@ -526,7 +527,7 @@ ALTER TABLE ONLY line_items
 
 
 --
--- Name: fk_rails_af645e8e5f; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: line_items fk_rails_af645e8e5f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY line_items
@@ -534,7 +535,7 @@ ALTER TABLE ONLY line_items
 
 
 --
--- Name: fk_rails_b3883bf42b; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: sizes fk_rails_b3883bf42b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sizes
@@ -542,7 +543,7 @@ ALTER TABLE ONLY sizes
 
 
 --
--- Name: fk_rails_e780b5db3f; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: socks fk_rails_e780b5db3f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY socks
@@ -550,7 +551,7 @@ ALTER TABLE ONLY socks
 
 
 --
--- Name: fk_rails_ee98d57c2f; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: socks fk_rails_ee98d57c2f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY socks
