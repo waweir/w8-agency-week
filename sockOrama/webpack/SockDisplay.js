@@ -26,17 +26,18 @@ class SockDisplay extends React.Component {
         }
     }
     componentDidMount() {
-      fetch('/socks')
-      .then(response => response.json())
-      .then((response) => {
-        console.log(response.socks)
-        this.setState({
-          socks: response.socks
-        })
-        document.querySelector('.item').classList.add('active')
-        document.querySelector('.carousel-indicators > li').classList.add('active')
-        document.querySelector('input[name="priceRadios"]:first-child').checked = true
-      })
+      // fetch('/socks')
+      // .then(response => response.json())
+      // .then((response) => {
+      //   console.log(response.socks)
+      //   this.setState({
+      //     socks: response.socks
+      //   })
+        // document.querySelector('.item').classList.add('active')
+        // document.querySelector('.carousel-indicators > li').classList.add('active')
+        // document.querySelector('input[name="priceRadios"]:first-child').checked = true
+      // })
+      document.querySelector('input[name="priceRadios"]:first-child').checked = true
     }
     openModal() {
         this.setState({
@@ -56,16 +57,17 @@ class SockDisplay extends React.Component {
     handleFilterChange(e) {
       // TODO: add fetch call with values
       var price = document.querySelector('input[name="priceRadios"]:checked')
+      var size = []
       if (e.target.name === 'priceRadios') {
         price.checked = false
         e.target.checked = true
-        console.log(e.target.value)
-        console.log(price.value)
-      } else {
-        console.log('test')
+        console.log('target value: ' + e.target.value)
+        console.log('price value: ' + price.value)
+      } else if (e.target.name === 'sizeCheckbox') {
+        document.querySelectorAll('input[name="sizeCheckbox"]:checked').forEach(function(check) {
+          size.push(check.value)
+        })
       }
-
-
     }
     handleSizeChange(e) {
       this.setState({
@@ -203,37 +205,37 @@ class SockDisplay extends React.Component {
                     <h4>Size</h4>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="s" onChange={this.handleFilterChange} />
+                        <input type="checkbox" value="s" name="sizeCheckbox" onChange={this.handleFilterChange} />
                         S
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="m" />
+                        <input type="checkbox" value="m" name="sizeCheckbox" onChange={this.handleFilterChange} />
                         M
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="l" />
+                        <input type="checkbox" value="l" name="sizeCheckbox" onChange={this.handleFilterChange} />
                         L
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="xl" />
+                        <input type="checkbox" value="xl" name="sizeCheckbox" onChange={this.handleFilterChange} />
                         XL
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="xxl" />
+                        <input type="checkbox" value="xxl" name="sizeCheckbox" onChange={this.handleFilterChange} />
                         XXL
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="xxxl" />
+                        <input type="checkbox" value="xxxl" name="sizeCheckbox" onChange={this.handleFilterChange} />
                         XXXL
                       </label>
                     </div>
