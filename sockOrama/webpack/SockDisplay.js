@@ -119,11 +119,16 @@ class SockDisplay extends React.Component {
       // start function to contatenate and send fetch call with filter values
       var sizeFilter = size.join('')
       var colorFilter = color.join('&filter[color_name_cont]=')
-      var materialFilter = material.join('&filter[style_name_cont]=')
+      var materialFilter = material.join('&filter[category_name_cont]=')
       var styleFilter = style.join('&filter[style_name_cont]=')
-      console.log('price: ' + price.value + ' size: ' + sizeFilter + '&filter[color_name_cont]=' + colorFilter + '&filter[style_name_cont]=' + materialFilter + '&filter[style_name_cont]=' + styleFilter)
 
-      // http://localhost:5000/socks/filter?filter[name_cont]=&filter[style_name_cont]=crew&filter[style_name_cont]=dress&filter[color_name_cont]=&filter[category_name_cont]=
+      fetch('/socks/filter?filter[color_name_cont]=' + colorFilter + '&filter[style_name_cont]=' + styleFilter + '&filter[category_name_cont]=' + materialFilter)
+      .then(response => response.json())
+      .then(response => {
+          this.setState({
+            socks: response.socks
+          })
+      })
 
 
     }
