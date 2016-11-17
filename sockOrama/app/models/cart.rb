@@ -23,11 +23,11 @@ class Cart < ApplicationRecord
   end
 
   def tax
-    subtotal * 0.6
+    subtotal * 0.06
   end
 
   def shipping
-    (line_items.num_ordered).sum * 2
+    line_items.collect { |li| li.valid? ? li.num_ordered : 0}.sum * 200
   end
 
   def total
