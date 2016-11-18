@@ -12,6 +12,21 @@ class Main extends React.Component {
     }
     componentDidMount() {
          attachSharedState(this)
+         this.setState({
+             itemsInCart: 0
+         })
+         if (sessionStorage.getItem('cart_token') == null) {
+           console.log(this.state.itemsInCart)
+         } else {
+           console.log(sessionStorage.getItem('cart_token'))
+           fetch('/view_cart?token=' + sessionStorage.getItem('cart_token'))
+           .then(response => response.json())
+           .then(repsonse => {
+             console.log(response)
+
+           })
+         }
+         // console.log(this.state.itemsInCart)
     }
 
     componentWillUnmount() {
@@ -61,7 +76,7 @@ class Main extends React.Component {
                     {/* TODO: where # is, put the counter of items.*/}
                     <button className="cartButton btn btn-default btn-lg">
                         <div className="glyphicon glyphicon-shopping-cart"></div>
-                        <span className="badge">{this.state.cartQuantity}</span>
+                        <span className="badge">{this.state.itemsInCart}</span>
                     </button>
                     </Link>
                 </div>

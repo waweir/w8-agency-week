@@ -51,12 +51,10 @@ class SockDisplay extends React.Component {
                 this.setState({
                     socks: response.socks
                 })
+                document.querySelector('.item').classList.add('active')
+                document.querySelector('.carousel-indicators > li').classList.add('active')
+                // document.querySelector('input[name="priceRadios"]:first-child').checked = true
             })
-
-      })
-
-      sharedState({
-          cartQuantity: 0
       })
       fetch('/socks')
       .then(response => response.json())
@@ -64,10 +62,7 @@ class SockDisplay extends React.Component {
         sharedState({
           socks: response.socks
         })
-        document.querySelector('.item').classList.add('active')
-        document.querySelector('.carousel-indicators > li').classList.add('active')
-        // document.querySelector('input[name="priceRadios"]:first-child').checked = true
-  })
+            })
     }
 
     componentWillUnmount() {
@@ -181,7 +176,8 @@ class SockDisplay extends React.Component {
       if (this.state.sizeSelection == 0) {
         alert('Please select a size')
       } else {
-        var cartQuantity = this.state.cartQuantity += 1
+        // var cartQuantity = this.state.cartQuantity
+        // var cartQuantity = this.state.cartQuantity.push('item')
         fetch('/add_to_cart?size_id=' + this.state.sizeSelection + '&num_ordered=' + this.state.quantity + cartToken, {
           method: 'POST'
         })
@@ -189,9 +185,10 @@ class SockDisplay extends React.Component {
         .then(response => {
           sessionStorage.setItem('cart_token', response.cart.token)
         })
-        sharedState({
-          cartQuantity: cartQuantity
-        })
+        // sharedState({
+        //   cartQuantity: cartQuantity
+        // })
+        // console.log(this.state.cartQuantity)
       }
       this.closeModal()
     }
