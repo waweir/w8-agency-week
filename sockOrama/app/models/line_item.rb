@@ -11,7 +11,7 @@ protected
   def change_stock
     @size = size
     if num_ordered_changed?
-      @change = (num_order_change[0]) - (num_order_change[1])
+      @change = (num_ordered_change[0]) - (num_ordered_change[1])
       @size.in_stock = (size.in_stock + @change)
       @size.save
     else
