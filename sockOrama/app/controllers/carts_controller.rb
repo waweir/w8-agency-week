@@ -6,11 +6,15 @@ class CartsController < ApplicationController
   end
 
   def update
-    @cart = Cart.find_by(token: params[:token]),
+    @cart = Cart.find_by(token: params[:token])
     @cart.ship_to_address = params[:ship_to_address],
     @cart.email = params[:email],
     @cart.customer = params[:customer]
-    render json: @cart
+    if @cart.save
+      render json: @cart
+    else
+      render json: @cart.errors
+    end
   end
 
   def destroy
