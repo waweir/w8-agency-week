@@ -1,9 +1,9 @@
 {
- "client_id": "google_drive_id",
- "client_secret": "google_drive_secret",
- "scope": [
-   "https://www.googleapis.com/auth/drive",
-   "https://spreadsheets.google.com/feeds/"
- ],
- "refresh_token": "google_refresh_token"
+  "client_id": "653828597724-7krme0jdp3g2f32194hpcok8voecpg7i.apps.googleusercontent.com",
+  "client_secret": "dtxpHvTkl85XLSqB8nC-jrsr",
+  "scope": [
+    "https://www.googleapis.com/auth/drive",
+    "https://spreadsheets.google.com/feeds/"
+  ],
+  "refresh_token": "1/LdzBwawAWiMBIJRV7niPI_3tKq-DjIxBhpBgcimNvvM"
 }
