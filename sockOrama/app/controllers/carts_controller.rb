@@ -7,9 +7,11 @@ class CartsController < ApplicationController
 
   def update
     @cart = Cart.find_by(token: params[:token])
-    @cart.ship_to_address = params[:ship_to_address],
-    @cart.email = params[:email],
-    @cart.customer = params[:customer]
+    if @cart.complete
+      render json: ['Cannot add to completed order!']
+    else
+      @cart.update! (cart_params)
+    end
     if @cart.save
       render json: @cart
     else
@@ -20,6 +22,12 @@ class CartsController < ApplicationController
   def destroy
     @cart = Cart.find_by(token: params[:token])
     @cart.line_items.destroy!
+  end
+
+  private
+
+  def cart_params
+    params.permit(:ship_to_address, :customer, :email, :token, :complete)
   end
 
 end
