@@ -66,7 +66,7 @@ class SockDisplay extends React.Component {
         })
         document.querySelector('.item').classList.add('active')
         document.querySelector('.carousel-indicators > li').classList.add('active')
-        document.querySelector('input[name="priceRadios"]:first-child').checked = true
+        // document.querySelector('input[name="priceRadios"]:first-child').checked = true
   })
     }
 
@@ -286,7 +286,7 @@ class SockDisplay extends React.Component {
             {/* Start Filter Panel */}
               <section className="col-xs-5 col-sm-2 panel panel-default">
                 <div className="panel-body">
-                  <ul className="list-unstyled">
+                  {/* <ul className="list-unstyled">
                     <h4>Price</h4>
                     <div className="radio">
                       <label>
@@ -318,8 +318,8 @@ class SockDisplay extends React.Component {
                         Over $40
                       </label>
                     </div>
-                  </ul>
-                  <hr />
+                  </ul> */}
+                  {/* <hr /> */}
                   <ul className="list-unstyled">
                     <h4>Size</h4>
                     <div className="checkbox">
