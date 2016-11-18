@@ -39,29 +39,40 @@ class CartDisplay extends React.Component {
          tax: "",
          shipping: "",
          total: "",
+         customer: "",
+         ship_to_address: "",
+
 
       }
       this.handleChange = this.handleChange.bind(this)
       this.submitOrder = this.submitOrder.bind(this)
-      this.calculateSubtotal = this.calculateSubtotal.bind(this)
-      this.calculateShipping = this.calculateShipping.bind(this)
+      // this.calculateSubtotal = this.calculateSubtotal.bind(this)
+      // this.calculateShipping = this.calculateShipping.bind(this)
       this.calculateTotal = this.calculateTotal.bind(this)
+      // this.typingBillingFirstName = this.typingBillingFirstName.bind(this)
+      // this.typingBillingLastName = this.typingBillingLastName.bind(this)
+      this.typing = this.typing.bind(this)
+      // this.collectBillingAddress = this.collectBillingAddress.bind(this)
+      this.collectShippingAddress = this.collectShippingAddress.bind(this)
+      this.postShippingInfoToCart = this.postShippingInfoToCart.bind(this)
+
    }
    componentDidMount() {
       attachSharedState(this)
       // http://localhost:5000/view_cart?token=CYGZCTF8HmpDbN2UQzbVYRNF
-      fetch('/view_cart?token=4VTmFoh7EZm8P5Hm3bd5E2Zs')
+      // fetch('/view_cart?token=' + sessionStorage.getItem('cart_token')) // grab cart token from session storage
+      fetch('/view_cart?token=jzyGctVrpWWMkd1c1dSYTs8J')
       // fetch('http://localhost:5000/socks')
       .then(response => response.json())
       // .then(response => console.log(response))
       .then(response => {
-         console.log(response[1].subtotal)
+         console.log(response.cart.subtotal)
          this.setState ({
             cart: response[0],
-            subtotal: response[1].subtotal,
-            tax: response[1].tax,
-            shipping: response[1].shipping,
-            total: response[1].total,
+            subtotal: response.cart.subtotal,
+            tax: response.cart.tax,
+            shipping: response.cart.shipping,
+            total: response.cart.total,
          })
       })
       console.log(this.state.subtotal)
@@ -85,63 +96,62 @@ class CartDisplay extends React.Component {
 
          })
       }
-      // data.append('billingFirstName', this.state.billingFirstName)
-      console.log(document.getElementById('email').value)
-      console.log(document.getElementById('billingFirstName').value)
-      console.log(document.getElementById('billingLastName').value)
-      console.log(document.getElementById('billingTelephone').value)
-      console.log(document.getElementById('billingAddress').value)
-      console.log(document.getElementById('billingAddressAdditional').value)
-      console.log(document.getElementById('billingCity').value)
-      console.log(document.getElementById('billingZipcode').value)
-      console.log(document.getElementById('shippingFirstName').value)
-      console.log(document.getElementById('shippingLastName').value)
-      console.log(document.getElementById('shippingTelephone').value)
-      console.log(document.getElementById('shippingAddress').value)
-      console.log(document.getElementById('shippingAddressAdditional').value)
-      console.log(document.getElementById('shippingCity').value)
-      console.log(document.getElementById('shippingZipcode').value)
-      console.log(document.getElementById('paymentCardNumber').value)
-      console.log(document.getElementById('paymentCardHolderName').value)
-      console.log(document.getElementById('paymentVerificationNumber').value)
-      data.append('email', document.getElementById('email').value)
-      data.append('billingFirstName', document.getElementById('billingFirstName').value)
-      data.append('billingLastName', document.getElementById('billingLastName').value)
-      data.append('billingTelephone', document.getElementById('billingTelephone').value)
-      data.append('billingAddress', document.getElementById('billingAddress').value)
-      data.append('billingAddressAdditional', document.getElementById('billingAddressAdditional').value)
-      data.append('billingCity', document.getElementById('billingCity').value)
-      data.append('billingState', document.getElementById('billingState').value)
-      data.append('billingZipcode', document.getElementById('billingZipcode').value)
-      data.append('shippingFirstName', document.getElementById('shippingFirstName').value)
-      data.append('shippingLastName', document.getElementById('shippingLastName').value)
-      data.append('shippingTelephone', document.getElementById('shippingTelephone').value)
-      data.append('shippingAddress', document.getElementById('shippingAddress').value)
-      data.append('shippingAddressAdditional', document.getElementById('shippingAddressAdditional').value)
-      data.append('shippingCity', document.getElementById('shippingCity').value)
-      data.append('shippingZipcode', document.getElementById('shippingZipcode').value)
-      data.append('paymentCardNumber', document.getElementById('paymentCardNumber').value)
-      data.append('paymentCardHolderName', document.getElementById('paymentCardHolderName').value)
-      data.append('paymentVerificationNumber', document.getElementById('paymentVerificationNumber').value)
-      // data.append('billingLastName', this.state.billingLastName)
-      // data.append('billingLastName', this.state.billingLastName)
+      this.postShippingInfoToCart()
 
-      console.log(data.entries)
-      // fetch('', {
-      //    method: 'POST',
-      //    body: data
-      // })
-      // .then(response => response.json())
-      // .then() // fire off a post submit operation with the response
-   }
-
-   calculateSubtotal () {
 
    }
 
-   calculateShipping() {
-
+   typing(e) {
+      var updatedState = {}
+      updatedState[e.target.name] = e.target.value
+      // console.log(updatedState)
+      this.setState(updatedState)
+      this.collectShippingAddress()
    }
+   // typingBillingLastName(e) {
+   //    this.setState({
+   //       billingLastName: e.target.value
+   //    })
+   // }
+   // collectBillingAddress() {
+   //    this.setState({
+   //       customer: this.state.billingFirstName + ' ' + this.state.billingLastName,
+   //    })
+   //    console.log(this.state.customer)
+   // }
+   collectShippingAddress() {
+      this.setState({
+         customer: this.state.shippingFirstName + ' ' + this.state.shippingLastName,
+         ship_to_address: shippingAddress + ' ' + shippingAddressAdditional + ' ' + shippingCity + ' ' + shippingState + ' ' + shippingZipcode,
+
+      })
+      console.log(this.state.customer)
+   }
+   postShippingInfoToCart() {
+      fetch('/order_info?token=jzyGctVrpWWMkd1c1dSYTs8J', {
+      // fetch('/order_info?token=A2Vnnfs29EEwVFVocyN7hqsf&ship_to_address=20 fire street&email=this@sucks.com&customer=Peter Sherman', {
+          body: JSON.stringify({
+            // token: 'A2Vnnfs29EEwVFVocyN7hqsf',
+            //  token: sessionStorage.getItem('cart_token')
+            ship_to_address: this.state.ship_to_address,
+            email: this.state.email,
+            customer: this.state.customer,
+
+          }),
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => response.json())
+   }
+   // calculateSubtotal () {
+   //
+   // }
+   //
+   // calculateShipping() {
+   //
+   // }
 
    calculateTotal() {
 
@@ -150,19 +160,19 @@ class CartDisplay extends React.Component {
       var cartArray = []
       var socksId = []
       // var orderTotal = 0
-      var cart = this.state.cart.map((sock, i) => {
-         //   if (socksId.indexOf(sock.name) === -1) {
-         if (socksId.indexOf(sock.name) === -1) {
-            socksId.push(sock.name)
-            cartArray.push(sock)
-            // orderSubtotal += sock.price
-            // orderShipping += 2
-            //  orderTotal += orderShipping + orderSubtotal
-         }
-      })
+      // var cart = this.state.cart.map((sock, i) => {
+      //    //   if (socksId.indexOf(sock.name) === -1) {
+      //    if (socksId.indexOf(sock.name) === -1) {
+      //       socksId.push(sock.name)
+      //       cartArray.push(sock)
+      //       // orderSubtotal += sock.price
+      //       // orderShipping += 2
+      //       //  orderTotal += orderShipping + orderSubtotal
+      //    }
+      // })
 
 
-      console.log(cartArray)
+      // console.log(cartArray)
       var displayOrder = cartArray.map((sock, i) => { //Showing socks now, change to cart API fetch when available
          return  <div className="col-sm-12" key={i}>
             <div className="panel panel-default">
@@ -184,112 +194,112 @@ class CartDisplay extends React.Component {
       })
 
       // Hide/Show Shipping Address when checkbox marked
-      const content = this.state.checked ? null : <div className="">
-         <h2>Shipping Address</h2>
-         <div className="form-group well billingAddress">
-            <div className="row">
-               <div className="col-sm-6">
-                  <label htmlFor="shippingFirstName">First Name</label>
-                  <input className="form-control" type="text" name="shippingFirstName" id="shippingFirstName" placeholder="Snow" required/>
-               </div>
-               <div className="col-sm-6">
-                  <label htmlFor="shippingLastName">Last Name</label>
-                  <input className="form-control" type="text" name="shippingLastName" id="shippingLastName" placeholder="White" required/>
-               </div>
-            </div>
-            <div className="row">
-               <br />
-               <div className="col-sm-12">
-                  <label htmlFor="shippingTelephone">Telephone</label>
-                  <input className="form-control" type="tel" name="shippingTelephone" id="shippingTelephone" placeholder="123 456 7890" required/>
-               </div>
-            </div>
-            <div className="row">
-               <br />
-               <div className="col-sm-12">
-                  <label htmlFor="shippingAddress">Shipping Address</label>
-                  <input className="form-control" type="text" name="shippingAddress" id="shippingAddress" placeholder="12 Upup Downdown PKWY" required/>
-               </div>
-            </div>
-            <div className="row">
-               <br />
-               <div className="col-sm-12">
-                  <input className="form-control" type="text" name="shippingAddressAdditional" id="shippingAddressAdditional" placeholder="Unit Left Right Left Right" />
-               </div>
-            </div>
-            <div className="row">
-               <br />
-               <div className="col-sm-12">
-                  <label htmlFor="shippingCity">City</label>
-                  <input className="form-control" type="text" name="shippingCity" id="shippingCity" placeholder="Bee Ayystart" required/>
-               </div>
-            </div>
-            <div className="row">
-               <br />
-               <div className="col-sm-6">
-                  <label htmlFor="shippingState">State</label>
-                  <select id="shippingState" name="shippingState" className="form-control" defaultValue="default">
-                     <option disabled value="default">-Select State-</option>
-                     <option value="AL">Alabama</option>
-                     <option value="AK">Alaska</option>
-                     <option value="AZ">Arizona</option>
-                     <option value="AR">Arkansas</option>
-                     <option value="CA">California</option>
-                     <option value="CO">Colorado</option>
-                     <option value="CT">Connecticut</option>
-                     <option value="DE">Delaware</option>
-                     <option value="DC">District Of Columbia</option>
-                     <option value="FL">Florida</option>
-                     <option value="GA">Georgia</option>
-                     <option value="HI">Hawaii</option>
-                     <option value="ID">Idaho</option>
-                     <option value="IL">Illinois</option>
-                     <option value="IN">Indiana</option>
-                     <option value="IA">Iowa</option>
-                     <option value="KS">Kansas</option>
-                     <option value="KY">Kentucky</option>
-                     <option value="LA">Louisiana</option>
-                     <option value="ME">Maine</option>
-                     <option value="MD">Maryland</option>
-                     <option value="MA">Massachusetts</option>
-                     <option value="MI">Michigan</option>
-                     <option value="MN">Minnesota</option>
-                     <option value="MS">Mississippi</option>
-                     <option value="MO">Missouri</option>
-                     <option value="MT">Montana</option>
-                     <option value="NE">Nebraska</option>
-                     <option value="NV">Nevada</option>
-                     <option value="NH">New Hampshire</option>
-                     <option value="NJ">New Jersey</option>
-                     <option value="NM">New Mexico</option>
-                     <option value="NY">New York</option>
-                     <option value="NC">North Carolina</option>
-                     <option value="ND">North Dakota</option>
-                     <option value="OH">Ohio</option>
-                     <option value="OK">Oklahoma</option>
-                     <option value="OR">Oregon</option>
-                     <option value="PA">Pennsylvania</option>
-                     <option value="RI">Rhode Island</option>
-                     <option value="SC">South Carolina</option>
-                     <option value="SD">South Dakota</option>
-                     <option value="TN">Tennessee</option>
-                     <option value="TX">Texas</option>
-                     <option value="UT">Utah</option>
-                     <option value="VT">Vermont</option>
-                     <option value="VA">Virginia</option>
-                     <option value="WA">Washington</option>
-                     <option value="WV">West Virginia</option>
-                     <option value="WI">Wisconsin</option>
-                     <option value="WY">Wyoming</option>
-                  </select>
-               </div>
-               <div className="col-sm-6">
-                  <label htmlFor="shippingZipcode">Zipcode</label>
-                  <input className="form-control" type="text" name="shippingZipcode" id="shippingZipcode" placeholder="46202" required/>
-               </div>
-            </div>
-         </div>
-      </div>;
+      // const content = this.state.checked ? null : <div className="">
+      //    <h2>Shipping Address</h2>
+      //    <div className="form-group well billingAddress">
+      //       <div className="row">
+      //          <div className="col-sm-6">
+      //             <label htmlFor="shippingFirstName">First Name</label>
+      //             <input className="form-control" type="text" name="shippingFirstName" id="shippingFirstName" placeholder="Snow" required/>
+      //          </div>
+      //          <div className="col-sm-6">
+      //             <label htmlFor="shippingLastName">Last Name</label>
+      //             <input className="form-control" type="text" name="shippingLastName" id="shippingLastName" placeholder="White" required/>
+      //          </div>
+      //       </div>
+      //       <div className="row">
+      //          <br />
+      //          <div className="col-sm-12">
+      //             <label htmlFor="shippingTelephone">Telephone</label>
+      //             <input className="form-control" type="tel" name="shippingTelephone" id="shippingTelephone" placeholder="123 456 7890" required/>
+      //          </div>
+      //       </div>
+      //       <div className="row">
+      //          <br />
+      //          <div className="col-sm-12">
+      //             <label htmlFor="shippingAddress">Shipping Address</label>
+      //             <input className="form-control" type="text" name="shippingAddress" id="shippingAddress" placeholder="12 Upup Downdown PKWY" required/>
+      //          </div>
+      //       </div>
+      //       <div className="row">
+      //          <br />
+      //          <div className="col-sm-12">
+      //             <input className="form-control" type="text" name="shippingAddressAdditional" id="shippingAddressAdditional" placeholder="Unit Left Right Left Right" />
+      //          </div>
+      //       </div>
+      //       <div className="row">
+      //          <br />
+      //          <div className="col-sm-12">
+      //             <label htmlFor="shippingCity">City</label>
+      //             <input className="form-control" type="text" name="shippingCity" id="shippingCity" placeholder="Bee Ayystart" required/>
+      //          </div>
+      //       </div>
+      //       <div className="row">
+      //          <br />
+      //          <div className="col-sm-6">
+      //             <label htmlFor="shippingState">State</label>
+      //             <select id="shippingState" name="shippingState" className="form-control" value={this.state.shippingState} onChange={this.typing}>
+      //                <option disabled value="default">-Select State-</option>
+      //                <option value="AL">Alabama</option>
+      //                <option value="AK">Alaska</option>
+      //                <option value="AZ">Arizona</option>
+      //                <option value="AR">Arkansas</option>
+      //                <option value="CA">California</option>
+      //                <option value="CO">Colorado</option>
+      //                <option value="CT">Connecticut</option>
+      //                <option value="DE">Delaware</option>
+      //                <option value="DC">District Of Columbia</option>
+      //                <option value="FL">Florida</option>
+      //                <option value="GA">Georgia</option>
+      //                <option value="HI">Hawaii</option>
+      //                <option value="ID">Idaho</option>
+      //                <option value="IL">Illinois</option>
+      //                <option value="IN">Indiana</option>
+      //                <option value="IA">Iowa</option>
+      //                <option value="KS">Kansas</option>
+      //                <option value="KY">Kentucky</option>
+      //                <option value="LA">Louisiana</option>
+      //                <option value="ME">Maine</option>
+      //                <option value="MD">Maryland</option>
+      //                <option value="MA">Massachusetts</option>
+      //                <option value="MI">Michigan</option>
+      //                <option value="MN">Minnesota</option>
+      //                <option value="MS">Mississippi</option>
+      //                <option value="MO">Missouri</option>
+      //                <option value="MT">Montana</option>
+      //                <option value="NE">Nebraska</option>
+      //                <option value="NV">Nevada</option>
+      //                <option value="NH">New Hampshire</option>
+      //                <option value="NJ">New Jersey</option>
+      //                <option value="NM">New Mexico</option>
+      //                <option value="NY">New York</option>
+      //                <option value="NC">North Carolina</option>
+      //                <option value="ND">North Dakota</option>
+      //                <option value="OH">Ohio</option>
+      //                <option value="OK">Oklahoma</option>
+      //                <option value="OR">Oregon</option>
+      //                <option value="PA">Pennsylvania</option>
+      //                <option value="RI">Rhode Island</option>
+      //                <option value="SC">South Carolina</option>
+      //                <option value="SD">South Dakota</option>
+      //                <option value="TN">Tennessee</option>
+      //                <option value="TX">Texas</option>
+      //                <option value="UT">Utah</option>
+      //                <option value="VT">Vermont</option>
+      //                <option value="VA">Virginia</option>
+      //                <option value="WA">Washington</option>
+      //                <option value="WV">West Virginia</option>
+      //                <option value="WI">Wisconsin</option>
+      //                <option value="WY">Wyoming</option>
+      //             </select>
+      //          </div>
+      //          <div className="col-sm-6">
+      //             <label htmlFor="shippingZipcode">Zipcode</label>
+      //             <input className="form-control" type="text" name="shippingZipcode" id="shippingZipcode" placeholder="46202" required/>
+      //          </div>
+      //       </div>
+      //    </div>
+      // </div>;
 
       return <div className="container checkout">
          {/* whoever works on this can decide if the cart display and billing and shipping panel need to be 2 separate components that are displayed through this render function, or if they are just defined here */}
@@ -298,27 +308,34 @@ class CartDisplay extends React.Component {
          </div>
          <div className="row">
             <div className="col-sm-4">
-               <h2>1. Billing Address</h2>
+               {/* <h2>1. Billing Address</h2>
+               <form action="/charges" method="POST">
+                  <div id="card_errors"></div>
+                  <label className="amount">
+                    <span>Amount: $5.00</span>
+                  </label>
+                  <input type="hidden" name="id" value="1" />
+               </form>
                <div className="form-group well billingAddress">
                   <div className="row">
                      <div className="col-sm-6">
                         <label htmlFor="billingFirstName">First Name</label>
-                        <input className="form-control" type="text" name="billingFirstName" id="billingFirstName" placeholder="Jon" required />
+                        <input className="form-control" type="text" name="billingFirstName" onChange={this.typing} value={this.state.billingFirstName} id="billingFirstName" placeholder="Jon" required />
                      </div>
                      <div className="col-sm-6">
                         <label htmlFor="billingLastName">Last Name</label>
-                        <input className="form-control" type="text" name="billingLastName" id="billingLastName" placeholder="Snow" required/>
+                        <input className="form-control" type="text" name="billingLastName" onChange={this.typing} value={this.state.billingLastName} id="billingLastName" placeholder="Snow" required/>
                      </div>
                   </div>
                   <div className="row">
                      <br />
                      <div className="col-sm-6">
                         <label htmlFor="email">Email</label>
-                        <input className="form-control" type="email" name="email" id="email" placeholder="Winter@is.coming" required/>
+                        <input className="form-control" type="email" name="email" id="email" onChange={this.typing} value={this.state.email} placeholder="Winter@is.coming" required/>
                      </div>
                      <div className="col-sm-6">
                         <label htmlFor="billingTelephone">Telephone</label>
-                        <input className="form-control" type="tel" name="billingTelephone" id="billingTelephone" placeholder="0118 999 88199 9119 725 3" required/>
+                        <input className="form-control" type="tel" name="billingTelephone" onChange={this.typing} value={this.state.billingTelephone} id="billingTelephone" placeholder="0118 999 88199 9119 725 3" required/>
                      </div>
                   </div>
                   <div className="row">
@@ -326,14 +343,15 @@ class CartDisplay extends React.Component {
                      <div className="col-sm-12">
 
                         <label htmlFor="billingAddress">Billing Address</label>
-                        <input className="form-control" type="text" name="billingAddress" id="billingAddress" placeholder="123 42nd AVE NE" required/>
+
+                     <input className="form-control" type="text" name="billingAddress" onChange={this.typing} value={this.state.billingAddress} id="billingAddress" placeholder="123 42nd AVE NE" required/>
                      </div>
                   </div>
                   <div className="row">
                      <br />
                      <div className="col-sm-12">
 
-                        <input className="form-control" type="text" name="billingAddressAdditional" id="billingAddressAdditional"  placeholder="Apartment/Suite/Other" />
+                        <input className="form-control" type="text" name="billingAddressAdditional" id="billingAddressAdditional" onChange={this.typing} value={this.state.billingAddressAdditional}   placeholder="Apartment/Suite/Other" />
                      </div>
                   </div>
                   <div className="row">
@@ -341,14 +359,14 @@ class CartDisplay extends React.Component {
                      <div className="col-sm-12">
 
                         <label htmlFor="billingCity">City</label>
-                        <input className="form-control" type="text" name="billingCity" id="billingCity" placeholder="Winterhold" required/>
+                        <input className="form-control" type="text" name="billingCity" id="billingCity" onChange={this.typing} value={this.state.billingCity} placeholder="Winterhold" required/>
                      </div>
                   </div>
                   <div className="row">
                      <br />
                      <div className="col-sm-6">
                         <label htmlFor="billingState">State</label>
-                        <select id="billingState" name="billingState" className="form-control" defaultValue="default">
+                        <select id="billingState" name="billingState" className="form-control" value={this.state.billingState} onChange={this.typing}>
                            <option disabled value="default">-Select State-</option>
                            <option value="AL">Alabama</option>
                            <option value="AK">Alaska</option>
@@ -415,14 +433,119 @@ class CartDisplay extends React.Component {
                   </label>
                </div>
                {content}
+            </div> */}
+            <h2>Shipping Address</h2>
+            <div className="form-group well billingAddress">
+               <div className="row">
+                  <div className="col-sm-6">
+                     <label htmlFor="shippingFirstName">First Name</label>
+                     <input className="form-control" type="text" name="shippingFirstName" id="shippingFirstName" placeholder="Snow" required/>
+                  </div>
+                  <div className="col-sm-6">
+                     <label htmlFor="shippingLastName">Last Name</label>
+                     <input className="form-control" type="text" name="shippingLastName" id="shippingLastName" placeholder="White" required/>
+                  </div>
+               </div>
+               <div className="row">
+                  <br />
+                  <div className="col-sm-12">
+                     <label htmlFor="shippingTelephone">Telephone</label>
+                     <input className="form-control" type="tel" name="shippingTelephone" id="shippingTelephone" placeholder="123 456 7890" required/>
+                  </div>
+               </div>
+               <div className="row">
+                  <br />
+                  <div className="col-sm-12">
+                     <label htmlFor="shippingAddress">Shipping Address</label>
+                     <input className="form-control" type="text" name="shippingAddress" id="shippingAddress" placeholder="12 Upup Downdown PKWY" required/>
+                  </div>
+               </div>
+               <div className="row">
+                  <br />
+                  <div className="col-sm-12">
+                     <input className="form-control" type="text" name="shippingAddressAdditional" id="shippingAddressAdditional" placeholder="Unit Left Right Left Right" />
+                  </div>
+               </div>
+               <div className="row">
+                  <br />
+                  <div className="col-sm-12">
+                     <label htmlFor="shippingCity">City</label>
+                     <input className="form-control" type="text" name="shippingCity" id="shippingCity" placeholder="Bee Ayystart" required/>
+                  </div>
+               </div>
+               <div className="row">
+                  <br />
+                  <div className="col-sm-6">
+                     <label htmlFor="shippingState">State</label>
+                     <select id="shippingState" name="shippingState" className="form-control" value={this.state.shippingState} onChange={this.typing}>
+                        <option disabled value="default">-Select State-</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="DC">District Of Columbia</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                     </select>
+                  </div>
+                  <div className="col-sm-6">
+                     <label htmlFor="shippingZipcode">Zipcode</label>
+                     <input className="form-control" type="text" name="shippingZipcode" id="shippingZipcode" placeholder="46202" required/>
+                  </div>
+               </div>
             </div>
+         </div>
             <div className="col-sm-4">
                <h2>2. Payment Method</h2>
                <div className="well">
                   <div className="row">
                      <div className="col-sm-12">
                         <label htmlFor="cardType">Card Type</label>
-                        <select id="cardType" name="cardType" className="form-control">
+                        <select id="cardType" name="cardType" className="form-control" value={this.state.cardType} onChange={this.typing}>
                            <option value="visa">Visa</option>
                            <option value="mastercard">Mastercard</option>
                            <option value="amex">American Express</option>
@@ -434,19 +557,19 @@ class CartDisplay extends React.Component {
                      <br />
                      {/* <div className="col-sm-12"> */}
                      <label htmlFor="paymentCardNumber">Card Number</label>
-                     <input className="form-control" type="text" name="paymentCardNumber" id="paymentCardNumber" placeholder="1234567890123456" required/>
+                     <input className="form-control" type="text" name="paymentCardNumber" id="paymentCardNumber" onChange={this.typing} value={this.state.paymentCardNumber} placeholder="1234567890123456" required/>
                      {/* </div> */}
                      {/* </div> */}
                      {/* <div className="form-group"> */}
                      <br />
                      {/* <div className="col-sm-12"> */}
                      <label htmlFor="paymentCardHolderName">Cardholder Name</label>
-                     <input className="form-control" type="text" name="paymentCardHolderName" id="paymentCardHolderName" placeholder="Danger Mouse" required/>
+                     <input className="form-control" type="text" name="paymentCardHolderName" id="paymentCardHolderName" onChange={this.typing} value={this.state.paymentCardHolderName} placeholder="Danger Mouse" required/>
                      <br />
                      <div className="row">
                         <div className="col-sm-6">
                            <label htmlFor="paymentExpirationMonth">Exp Month</label>
-                           <select id="paymentExpirationMonth" name="paymentExpirationMonth" className="form-control">
+                           <select id="paymentExpirationMonth" name="paymentExpirationMonth" className="form-control" value={this.state.paymentExpirationMonth} onChange={this.typing}>
                               <option value="01">01-January</option>
                               <option value="02">02-February</option>
                               <option value="03">03-March</option>
@@ -463,7 +586,7 @@ class CartDisplay extends React.Component {
                         </div>
                         <div className="col-sm-6">
                            <label htmlFor="paymentExpirationYear">Exp Year</label>
-                           <select id="paymentExpirationYear" name="paymentExpirationYear" className="form-control">
+                           <select id="paymentExpirationYear" name="paymentExpirationYear" className="form-control" value={this.state.paymentExpirationYear} onChange={this.typing}>
                               <option value="2016">2016</option>
                               <option value="2017">2017</option>
                               <option value="2018">2018</option>
@@ -478,7 +601,7 @@ class CartDisplay extends React.Component {
                      <br />
                      <div className="col-sm-6">
                         <label htmlFor="paymentVerificationNumber">Card Verification Number</label>
-                        <input className="form-control" type="text" name="paymentVerificationNumber" id="paymentVerificationNumber" placeholder="999" required/>
+                        <input className="form-control" type="text" name="paymentVerificationNumber" id="paymentVerificationNumber" onChange={this.typing} value={this.state.paymentVerificationNumber} placeholder="999" required/>
                      </div>
                   </div>
                </div>
@@ -491,7 +614,9 @@ class CartDisplay extends React.Component {
                         <img className="thumbnail" src="http://www.unsplash.it/100?random" width="100" />
                      </div>
                      <div className="col-sm-4"> */}
-                     { displayOrder }
+
+                     {/* { displayOrder } */}
+
                      {/* <h5>ITEM NAME</h5>
                         <p>Color:<strong> Color</strong></p>
                         <label>qty </label>

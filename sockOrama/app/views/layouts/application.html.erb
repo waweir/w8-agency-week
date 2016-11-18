@@ -13,7 +13,7 @@
   <%= stylesheet_link_tag *webpack_asset_paths('application', extension: 'css') %>
 </head>
 <body>
-  
+
   <div id="socksContainer" class="container-fluid">
     <div id="socks"></div>
   </div>
@@ -21,5 +21,10 @@
   <script type="text/javascript" src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch"></script>
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+           data-key="pk_test_qxSubRts5DNwAM0nVqYw8mqi"
+           data-description="This awesome photo!"
+           data-amount="500"
+           data-locale="auto"></script>
 </body>
 </html>

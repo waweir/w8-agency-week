@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router'
-import Search from '../react-search/lib/Search'
 
 class Main extends React.Component {
     constructor(props) {
