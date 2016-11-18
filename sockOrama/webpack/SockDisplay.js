@@ -39,12 +39,11 @@ class SockDisplay extends React.Component {
     componentDidMount() {
       attachSharedState(this)
       sharedState({
-        cartQuantity: 0,
+          cartQuantity: 0
       })
       fetch('/socks')
       .then(response => response.json())
       .then((response) => {
-        console.log(response.socks)
         sharedState({
           socks: response.socks
         })
@@ -70,9 +69,9 @@ class SockDisplay extends React.Component {
             modalSocks: response.socks,
             modalTitle: response.socks[0].name,
             modalDescription: response.socks[0].description,
-            // modalColor: response.socks[0].color.name,
-            // modalStyle: response.socks[0].style.name,
-            // modalMaterial: response.socks[0].category.name,
+            modalColor: response.socks[0].color.name,
+            modalStyle: response.socks[0].style.name,
+            modalMaterial: response.socks[0].category.name,
             modalPrice: (response.socks[0].price / 100).toFixed(2),
             modalImage: response.socks[0].image,
             modalSizes: response.socks[0].sizes
@@ -161,15 +160,16 @@ class SockDisplay extends React.Component {
         alert('Please select a size')
       } else {
         var cartQuantity = this.state.cartQuantity += 1
-        fetch('/add_to_cart?size_id=' + this.state.sizeSelection + '&num_ordered=' + this.state.quantity, {
+        fetch('/add_to_cart?size_id=' + this.state.sizeSelection + '&num_ordered=' + this.state.quantity + '&token=' + sessionStorage.getItem('cart_token'), {
           method: 'POST'
         })
         .then(response => response.json())
-        .then(response => console.log(response))
+        .then(response => {
+          sessionStorage.setItem('cart_token', response.cart.token)
+        })
         sharedState({
           cartQuantity: cartQuantity
         })
-        console.log(this.state.cartQuantity)
       }
       this.closeModal()
     }
@@ -231,7 +231,7 @@ class SockDisplay extends React.Component {
       var modalSizes = this.state.modalSizes.map((size, i) => {
         return <option value={size.id} key={i}>{size.abbr}</option>
       })
-      
+
         return <main className="container-fluid">
           {/* Start Featured Socks  */}
               <div className="row">
