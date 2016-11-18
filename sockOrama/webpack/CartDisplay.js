@@ -60,15 +60,15 @@ class CartDisplay extends React.Component {
    componentDidMount() {
       attachSharedState(this)
       // http://localhost:5000/view_cart?token=CYGZCTF8HmpDbN2UQzbVYRNF
-      // fetch('/view_cart?token=' + sessionStorage.getItem('cart_token')) // grab cart token from session storage
-      fetch('/view_cart?token=jzyGctVrpWWMkd1c1dSYTs8J')
+      fetch('/view_cart?token=' + sessionStorage.getItem('cart_token')) // grab cart token from session storage
+      // fetch('/view_cart?token=jzyGctVrpWWMkd1c1dSYTs8J')
       // fetch('http://localhost:5000/socks')
       .then(response => response.json())
       // .then(response => console.log(response))
       .then(response => {
          console.log(response.cart.subtotal)
          this.setState ({
-            cart: response[0],
+            cart: response,
             subtotal: response.cart.subtotal,
             tax: response.cart.tax,
             shipping: response.cart.shipping,
@@ -122,13 +122,14 @@ class CartDisplay extends React.Component {
    collectShippingAddress() {
       this.setState({
          customer: this.state.shippingFirstName + ' ' + this.state.shippingLastName,
-         ship_to_address: shippingAddress + ' ' + shippingAddressAdditional + ' ' + shippingCity + ' ' + shippingState + ' ' + shippingZipcode,
+         ship_to_address: this.state.shippingAddress + ' ' + this.state.shippingAddressAdditional + ' ' + this.state.shippingCity + ' ' + this.state.shippingState + ' ' + this.state.shippingZipcode,
 
       })
-      console.log(this.state.customer)
+      // console.log(this.state.customer)
    }
    postShippingInfoToCart() {
-      fetch('/order_info?token=jzyGctVrpWWMkd1c1dSYTs8J', {
+      // fetch('/order_info?token=jzyGctVrpWWMkd1c1dSYTs8J', {
+      fetch('/order_info?token=' + sessionStorage.getItem('cart_token'), {
       // fetch('/order_info?token=A2Vnnfs29EEwVFVocyN7hqsf&ship_to_address=20 fire street&email=this@sucks.com&customer=Peter Sherman', {
           body: JSON.stringify({
             // token: 'A2Vnnfs29EEwVFVocyN7hqsf',
@@ -173,25 +174,25 @@ class CartDisplay extends React.Component {
 
 
       // console.log(cartArray)
-      var displayOrder = cartArray.map((sock, i) => { //Showing socks now, change to cart API fetch when available
-         return  <div className="col-sm-12" key={i}>
-            <div className="panel panel-default">
-               <div className="panel-body sock-panel">
-                  <div className="row">
-                     <div className="col-sm-4">
-                        <img src="http://unsplash.it/100?random" width="100"/>
-                     </div>
-                     <div className="col-sm-2">
-                        <p>{sock.name}</p>
-                     </div>
-                     <div className="col-sm-6 text-right">
-                        <p>{sock.price}</p>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      })
+      // var displayOrder = cartArray.map((sock, i) => { //Showing socks now, change to cart API fetch when available
+      //    return  <div className="col-sm-12" key={i}>
+      //       <div className="panel panel-default">
+      //          <div className="panel-body sock-panel">
+      //             <div className="row">
+      //                <div className="col-sm-4">
+      //                   <img src="http://unsplash.it/100?random" width="100"/>
+      //                </div>
+      //                <div className="col-sm-2">
+      //                   <p>{sock.name}</p>
+      //                </div>
+      //                <div className="col-sm-6 text-right">
+      //                   <p>{sock.price}</p>
+      //                </div>
+      //             </div>
+      //          </div>
+      //       </div>
+      //    </div>
+      // })
 
       // Hide/Show Shipping Address when checkbox marked
       // const content = this.state.checked ? null : <div className="">
@@ -649,6 +650,11 @@ class CartDisplay extends React.Component {
                </div>
                <input type="checkbox" id="newsletter" name="newsletter" /><label htmlFor="newsletter">Like socks? Want newsletter?!</label>
                <button className="btn btn-success btn-block" onClick={this.submitOrder}>Purchase</button>
+               <button type='btn' src="https://checkout.stripe.com/checkout.js" className="stripe-button"
+                      data-key="pk_test_qxSubRts5DNwAM0nVqYw8mqi"
+                      data-description="This awesome photo!"
+                      data-amount="500"
+                      data-locale="auto"></button>
             </div>
          </div>
       </div>
