@@ -41,11 +41,11 @@ class SockDisplay extends React.Component {
         this.setState({sharedState: updatedSharedState})
 
         if (updatedSharedState.updateSearchResults) {
-          var searchTerm = updatedSharedState.updateSearchResults
+          var searchTerm = 'search=' + updatedSharedState.updateSearchResults
         } else {
           var searchTerm = ''
         }
-          fetch('/socks/filter?search=' + searchTerm)
+          fetch('/socks/filter?' + searchTerm)
             .then(response => response.json())
             .then(response => {
                 this.setState({
