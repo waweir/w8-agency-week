@@ -46,21 +46,16 @@ class CartDisplay extends React.Component {
       }
       this.handleChange = this.handleChange.bind(this)
       this.submitOrder = this.submitOrder.bind(this)
-      // this.calculateSubtotal = this.calculateSubtotal.bind(this)
-      // this.calculateShipping = this.calculateShipping.bind(this)
       this.calculateTotal = this.calculateTotal.bind(this)
-      // this.typingBillingFirstName = this.typingBillingFirstName.bind(this)
-      // this.typingBillingLastName = this.typingBillingLastName.bind(this)
       this.typing = this.typing.bind(this)
-      // this.collectBillingAddress = this.collectBillingAddress.bind(this)
       this.collectShippingAddress = this.collectShippingAddress.bind(this)
       this.postShippingInfoToCart = this.postShippingInfoToCart.bind(this)
 
    }
    componentDidMount() {
       attachSharedState(this)
-      // http://localhost:5000/view_cart?token=CYGZCTF8HmpDbN2UQzbVYRNF
       fetch('/view_cart?token=' + sessionStorage.getItem('cart_token')) // grab cart token from session storage
+      // fetch('/view_cart?token=tE5ZD3VA8UaQB1yko1CTXW68') // grab cart token from session storage
       // fetch('/view_cart?token=jzyGctVrpWWMkd1c1dSYTs8J')
       // fetch('http://localhost:5000/socks')
       .then(response => response.json())
@@ -74,8 +69,9 @@ class CartDisplay extends React.Component {
             shipping: response.cart.shipping,
             total: response.cart.total,
          })
+
+         console.log(this.state.cart)
       })
-      console.log(this.state.subtotal)
    }
    componentWillUnmount() {
       detachSharedState(this)
@@ -89,13 +85,13 @@ class CartDisplay extends React.Component {
       })
    }
    submitOrder() {
-      var data = new FormData()
-
-      if (this.state.checked === true) {
-         this.setState({
-
-         })
-      }
+      // var data = new FormData()
+      //
+      // if (this.state.checked === true) {
+      //    this.setState({
+      //
+      //    })
+      // }
       this.postShippingInfoToCart()
 
 
@@ -104,10 +100,10 @@ class CartDisplay extends React.Component {
    typing(e) {
       var updatedState = {}
       updatedState[e.target.name] = e.target.value
-      // console.log(updatedState)
+      console.log(updatedState)
       this.setState(updatedState)
       this.collectShippingAddress()
-      console.log(e)
+
    }
    // typingBillingLastName(e) {
    //    this.setState({
@@ -130,14 +126,14 @@ class CartDisplay extends React.Component {
    }
    postShippingInfoToCart() {
       // fetch('/order_info?token=jzyGctVrpWWMkd1c1dSYTs8J', {
-      fetch('/order_info?token=' + sessionStorage.getItem('cart_token'), {
+      fetch('/order_info?token=' + sessionStorage.getItem('cart_token') + '&ship_to_address=' + this.state.ship_to_address + '&email=' + this.state.email + '&customer=' + this.state.customer, {
       // fetch('/order_info?token=A2Vnnfs29EEwVFVocyN7hqsf&ship_to_address=20 fire street&email=this@sucks.com&customer=Peter Sherman', {
           body: JSON.stringify({
             // token: 'A2Vnnfs29EEwVFVocyN7hqsf',
             //  token: sessionStorage.getItem('cart_token')
-            ship_to_address: this.state.ship_to_address,
-            email: this.state.email,
-            customer: this.state.customer,
+            // ship_to_address: this.state.ship_to_address,
+            // email: this.state.email,
+            // customer: this.state.customer,
 
           }),
           method: 'PATCH',
@@ -145,7 +141,7 @@ class CartDisplay extends React.Component {
             'Content-Type': 'application/json'
           }
         })
-        .then(response => response.json())
+        .then(response => console.log(response))
    }
    // calculateSubtotal () {
    //
@@ -162,15 +158,16 @@ class CartDisplay extends React.Component {
       var cartArray = []
       var socksId = []
       // var orderTotal = 0
-      // var cart = this.state.cart.map((sock, i) => {
+      // var cart = this.state.cart.line_items.map((sock, i) => {
       //    //   if (socksId.indexOf(sock.name) === -1) {
-      //    if (socksId.indexOf(sock.name) === -1) {
-      //       socksId.push(sock.name)
+      //    // if (socksId.indexOf(sock.name) === -1) {
+      //       // socksId.push(sock.name)
       //       cartArray.push(sock)
       //       // orderSubtotal += sock.price
       //       // orderShipping += 2
       //       //  orderTotal += orderShipping + orderSubtotal
-      //    }
+      //    // }
+      //    console.log(cartArray)
       // })
 
 
@@ -441,38 +438,42 @@ class CartDisplay extends React.Component {
                <div className="row">
                   <div className="col-sm-6">
                      <label htmlFor="shippingFirstName">First Name</label>
-                     <input className="form-control" type="text" name="shippingFirstName" id="shippingFirstName" placeholder="Snow" required/>
+                     <input className="form-control" type="text" name="shippingFirstName" id="shippingFirstName" value={this.state.shippingFirstName} onChange={this.typing} placeholder="Snow" required/>
                   </div>
                   <div className="col-sm-6">
                      <label htmlFor="shippingLastName">Last Name</label>
-                     <input className="form-control" type="text" name="shippingLastName" id="shippingLastName" placeholder="White" required/>
+                     <input className="form-control" type="text" name="shippingLastName" id="shippingLastName" value={this.state.shippingLastName} onChange={this.typing} placeholder="White" required/>
                   </div>
                </div>
                <div className="row">
                   <br />
-                  <div className="col-sm-12">
+                  <div className="col-sm-6">
+                     <label htmlFor="email">Email</label>
+                     <input className="form-control" type="email" name="email" id="email" onChange={this.typing} value={this.state.email} placeholder="Winter@is.coming" required/>
+                  </div>
+                  <div className="col-sm-6">
                      <label htmlFor="shippingTelephone">Telephone</label>
-                     <input className="form-control" type="tel" name="shippingTelephone" id="shippingTelephone" placeholder="123 456 7890" required/>
+                     <input className="form-control" type="tel" name="shippingTelephone" id="shippingTelephone" value={this.state.shippingTelephone} onChange={this.typing} placeholder="123 456 7890" required/>
                   </div>
                </div>
                <div className="row">
                   <br />
                   <div className="col-sm-12">
                      <label htmlFor="shippingAddress">Shipping Address</label>
-                     <input className="form-control" type="text" name="shippingAddress" id="shippingAddress" placeholder="12 Upup Downdown PKWY" required/>
+                     <input className="form-control" type="text" name="shippingAddress" id="shippingAddress"  value={this.state.shippingAddress} onChange={this.typing} placeholder="12 Upup Downdown PKWY" required/>
                   </div>
                </div>
                <div className="row">
                   <br />
                   <div className="col-sm-12">
-                     <input className="form-control" type="text" name="shippingAddressAdditional" id="shippingAddressAdditional" placeholder="Unit Left Right Left Right" />
+                     <input className="form-control" type="text" name="shippingAddressAdditional" id="shippingAddressAdditional"  value={this.state.shippingAddressAdditional} onChange={this.typing} placeholder="Unit Left Right Left Right" />
                   </div>
                </div>
                <div className="row">
                   <br />
                   <div className="col-sm-12">
                      <label htmlFor="shippingCity">City</label>
-                     <input className="form-control" type="text" name="shippingCity" id="shippingCity" placeholder="Bee Ayystart" required/>
+                     <input className="form-control" type="text" name="shippingCity" id="shippingCity" value={this.state.shippingCity} onChange={this.typing} placeholder="Bee Ayystart" required/>
                   </div>
                </div>
                <div className="row">
@@ -536,7 +537,7 @@ class CartDisplay extends React.Component {
                   </div>
                   <div className="col-sm-6">
                      <label htmlFor="shippingZipcode">Zipcode</label>
-                     <input className="form-control" type="text" name="shippingZipcode" id="shippingZipcode" placeholder="46202" required/>
+                     <input className="form-control" type="text" name="shippingZipcode" id="shippingZipcode" value={this.state.shippingZipcode} onChange={this.typing} placeholder="46202" required/>
                   </div>
                </div>
             </div>
@@ -651,7 +652,8 @@ class CartDisplay extends React.Component {
                </div>
                <input type="checkbox" id="newsletter" name="newsletter" /><label htmlFor="newsletter">Like socks? Want newsletter?!</label>
                <button className="btn btn-success btn-block" onClick={this.submitOrder}>Purchase</button>
-            </div>
+
+         </div>
          </div>
       </div>
    }
