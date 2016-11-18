@@ -36,10 +36,6 @@ body {
 .sock-panel {
     padding-top: 0;
     padding-bottom: 0;
-    img {
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
-    }
     p {
         margin: 0;
         padding: 10px 0;
@@ -69,4 +65,36 @@ footer {
 }
 .hidden {
     display: none;
+}
+
+.modalPrice {
+    margin-top: 20px;
+}
+
+.checkout {
+    padding-bottom: 20px;
+    button {
+        height: 100px;
+        font-size: 3vw;
+        border-radius: 2vw;
+    }
+}
+.sock_image {
+    height: 125px;
+    width: 50%;
+    display: block;
+    padding: 5px;
+}
+.sock_image_modal {
+    width: 50%;
+    height: 125px;
+    margin-top: 30px;
+}
+.modal_row {
+    min-width: 500px;
+}
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

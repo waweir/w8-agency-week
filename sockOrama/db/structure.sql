@@ -56,7 +56,7 @@ CREATE TABLE carts (
     ship_to_address character varying,
     email character varying,
     customer character varying,
-    complete boolean,
+    complete boolean DEFAULT false NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -619,6 +619,4 @@ ALTER TABLE ONLY socks
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20161114225843'), ('20161115223957'), ('20161115224017'), ('20161115224024'), ('20161115224818'), ('20161115224930'), ('20161115225131'), ('20161115225207'), ('20161116172613'), ('20161116203557'), ('20161116211810'), ('20161117010157');
-
-
+INSERT INTO schema_migrations (version) VALUES ('20161114225843'), ('20161115223957'), ('20161115224017'), ('20161115224024'), ('20161115224818'), ('20161115224930'), ('20161115225131'), ('20161115225207'), ('20161116172613'), ('20161116203557'), ('20161116211810'), ('20161117010157'), ('20161118014549');

@@ -20,9 +20,19 @@ class SockDisplay extends React.Component {
         this.state = {
             modalIsOpen: false,
             quantity: 1,
-            maxQuantity: 10,
             sizeSelection: '0',
-            socks: []
+            socks: [],
+            modalSocks: [],
+            modalTitle: '',
+            modalDescription: '',
+            modalQuantity: 1,
+            modalColor: '',
+            modalStyle: '',
+            modalMaterial: '',
+            modalPrice: '',
+            modalImage: '',
+            modalSizes: [],
+            cartQuantity: 0
         }
     }
     componentDidMount() {
@@ -38,23 +48,37 @@ class SockDisplay extends React.Component {
         document.querySelector('input[name="priceRadios"]:first-child').checked = true
       })
     }
-    openModal() {
+
+    openModal(sock) {
         this.setState({
             modalIsOpen: true
         })
         document.querySelector('.carousel-indicators').classList.add('hidden')
+        fetch('/socks/filter?filter[name_cont]=' + sock)
+        .then(response => response.json())
+        .then((response) => {
+          this.setState({
+            modalSocks: response.socks,
+            modalTitle: response.socks[0].name,
+            modalDescription: response.socks[0].description,
+            // modalColor: response.socks[0].color.name,
+            // modalStyle: response.socks[0].style.name,
+            // modalMaterial: response.socks[0].category.name,
+            modalPrice: (response.socks[0].price / 100).toFixed(2),
+            modalImage: response.socks[0].image,
+            modalSizes: response.socks[0].sizes
+          })
+        })
     }
-    afterOpenModal() {
 
-    }
     closeModal() {
         this.setState({
             modalIsOpen:false
         })
         document.querySelector('.carousel-indicators').classList.remove('hidden')
     }
+
     handleFilterChange(e) {
-      // TODO: add fetch call with values
       var price = document.querySelector('input[name="priceRadios"]:checked')
       var size = []
       var color = []
@@ -71,6 +95,7 @@ class SockDisplay extends React.Component {
         document.querySelectorAll('input[name="colorCheckbox"]:checked').forEach(function(check) {
           color.push(check.value)
         })
+
         if (color.length > 0) {
           this.state.colorFilter += color.join(',')
         }
@@ -78,6 +103,7 @@ class SockDisplay extends React.Component {
         document.querySelectorAll('input[name="materialCheckbox"]:checked').forEach(function(check) {
           material.push(check.value)
         })
+
         if (material.length > 0) {
           this.state.materialFilter += material.join(',')
         }
@@ -85,28 +111,58 @@ class SockDisplay extends React.Component {
         document.querySelectorAll('input[name="styleCheckbox"]:checked').forEach(function(check) {
           style.push(check.value)
         })
-        if (style.length > 0) {
-          this.state.styleFilter += style.join(',')
-        }
       }
 
       // start function to contatenate and send fetch call with filter values
-      var sizeFilter = size.join(',')
-      var colorFilter = color.join(',')
-      var materialFilter = material.join(',')
-      var styleFilter = style.join(',')
-      console.log('price: ' + price.value + ' size: ' + sizeFilter + ' color: ' + colorFilter + ' material: ' + materialFilter + ' style: ' + styleFilter)
+      var sizeFilter = size.join('&filter[sizes_abbr_cont]=')
+      var colorFilter = color.join('&filter[color_name_cont]=')
+      var materialFilter = material.join('&filter[category_name_cont]=')
+      var styleFilter = style.join('&filter[style_name_cont]=')
+
+      fetch('/socks/filter?filter[color_name_cont]=' + colorFilter + '&filter[style_name_cont]=' + styleFilter + '&filter[category_name_cont]=' + materialFilter + '&filter[sizes_abbr_cont]=' + sizeFilter)
+      .then(response => response.json())
+      .then(response => {
+          this.setState({
+            socks: response.socks
+          })
+      })
     }
+
     handleSizeChange(e) {
       this.setState({
         sizeSelection: e.target.value
       })
+      this.state.modalSizes.forEach((size) => {
+        if (e.target.value == size.id) {
+          this.setState({
+            modalQuantity: size.in_stock
+          })
+        }
+      })
     }
+
     handleQuantityChange(e) {
       this.setState({
         quantity: e.target.value
       })
-      console.log(this.state.quantity)
+    }
+
+    addToCart() {
+      if (this.state.sizeSelection == 0) {
+        alert('Please select a size')
+      } else {
+        var cartQuantity = this.state.cartQuantity += 1
+        fetch('/add_to_cart?size_id=' + this.state.sizeSelection + '&num_ordered=' + this.state.quantity, {
+          method: 'POST'
+        })
+        .then(response => response.json())
+        .then(response => console.log(response))
+        this.setState({
+          cartQuantity: cartQuantity
+        })
+        console.log(this.state.cartQuantity)
+      }
+      this.closeModal()
     }
 
     render() {
@@ -120,17 +176,17 @@ class SockDisplay extends React.Component {
       })
       var displaySocks = socksArray.map((sock, i) => {
         return  <div className="col-xs-12 col-sm-4" key={i}>
-          <div className="panel panel-default" onClick={this.openModal}>
+          <div className="panel panel-default" onClick={() => this.openModal(sock.name)}>
             <div className="panel-body sock-panel">
-              <div className="row">
-                <img src="http://unsplash.it/300?random" width="100%"/>
+              <div className="row flex">
+                <img className="sock_image" src={sock.image} />
               </div>
               <div className="row">
-                <div className="col-xs-7">
+                <div className="col-xs-8">
                   <p>{sock.name}</p>
                 </div>
-                <div className="col-xs-5 text-right">
-                  <p>{sock.price}</p>
+                <div className="col-xs-4 text-right">
+                  <p>${(sock.price / 100).toFixed(2)}</p>
                 </div>
               </div>
             </div>
@@ -163,6 +219,10 @@ class SockDisplay extends React.Component {
         }
       })
 
+      var modalSizes = this.state.modalSizes.map((size, i) => {
+        return <option value={size.id} key={i}>{size.abbr}</option>
+      })
+      
         return <main className="container-fluid">
           {/* Start Featured Socks  */}
               <div className="row">
@@ -200,7 +260,6 @@ class SockDisplay extends React.Component {
                     <div className="radio">
                       <label>
                         <input type="radio" name="priceRadios" id="priceRadiosAnyPrice" value="anyPrice" onChange={this.handleFilterChange}/>
-                        {/* TODO: add checked and onChange event */}
                         Any Price
                       </label>
                     </div>
@@ -380,47 +439,43 @@ class SockDisplay extends React.Component {
               style={customStyles}
               contentLabel="Sock Modal"
               >
-                <div className="row">
+                <div className="row modal_row">
                   <div className="col-xs-10">
-                    <h2 ref="subtitle">Argyle</h2>
-                    <p className="lead small">Description (if one exists)</p>
+                    <h2>{this.state.modalTitle} <span className="lead small">${this.state.modalPrice} each</span></h2>
+                    <p className="lead small">{this.state.modalDescription}</p>
                   </div>
                   <div className="col-xs-2 text-right">
                     <button className="btn btn-default" onClick={this.closeModal}>X</button>
                   </div>
                 </div>
             <div className="row">
-            <div className="col-sm-6 text-center">
-              <img src="http://ecx.images-amazon.com/images/I/611Ov2M4vHL._AC_UL400_SR320,400_.jpg" width="100%"/>
+            <div className="col-sm-6 flex">
+              <img className="sock_image_modal" src={this.state.modalImage} width="100%"/>
             </div>
             <div className="col-sm-6">
               <div className="form-group">
                 <label htmlFor="size">Size</label>
                 <select id="size" name="size" value={this.state.sizeSelection} className="form-control" onChange={this.handleSizeChange}>
                   <option disabled value="0">-- Select a size --</option>
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
-                  <option value="XXL">XXL</option>
-                  <option value="XXXL">XXXL</option>
+                  {modalSizes}
                 </select>
               </div>
               <div className="form-group">
                 <label htmlFor="quantity">Quantity</label>
-                <input className="form-control" type="number" name="quantity" id="quantity" step="1" min="1" value={this.state.quantity} max={this.state.maxQuantity} pattern="[0-9]*" inputMode="numeric" onChange={this.handleQuantityChange}/>
+                <input className="form-control" type="number" name="quantity" id="quantity" step="1" min="1" value={this.state.quantity} max={this.state.modalQuantity} pattern="[0-9]*" inputMode="numeric" onChange={this.handleQuantityChange}/>
+                <p className="lead small text-right">Max Quantity: {this.state.modalQuantity}</p>
               </div>
               <div>
-                <p>Color: Various</p>
-                <p>Style: Dress</p>
-                <p>Material: Blended</p>
+                <p>Color: {this.state.modalColor}</p>
+                <p>Style: {this.state.modalStyle}</p>
+                <p>Material: {this.state.modalMaterial}</p>
               </div>
             </div>
             </div>
             <hr />
             <div className="row">
               <div className="col-sm-6 col-sm-offset-3">
-                  <button type="button" className="btn btn-success btn-block">Add to cart</button>
+                  <button type="button" className="btn btn-success btn-block" onClick={this.addToCart}>Add to cart</button>
               </div>
             </div>
           </Modal>
