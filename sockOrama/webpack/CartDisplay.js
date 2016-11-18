@@ -1,6 +1,7 @@
 import React from 'react'
 import classAutoBind from 'react-helpers/dist/classAutoBind'
 import { sharedState, attachSharedState, detachSharedState } from 'react-helpers/dist/sharedState'
+import accounting from 'accounting'
 
 class CartDisplay extends React.Component {
    constructor(props) {
@@ -32,7 +33,12 @@ class CartDisplay extends React.Component {
          paymentExpirationMonth: "",
          paymentExpirationYear: "",
          paymentVerificationNumber: "",
-         socks: [],
+         cart: [],
+         cartToken: "",
+         subtotal: "",
+         tax: "",
+         shipping: "",
+         total: "",
 
       }
       this.handleChange = this.handleChange.bind(this)
@@ -43,17 +49,22 @@ class CartDisplay extends React.Component {
    }
    componentDidMount() {
       attachSharedState(this)
-
-      fetch('http://localhost:5000/socks')
+      // http://localhost:5000/view_cart?token=CYGZCTF8HmpDbN2UQzbVYRNF
+      fetch('/view_cart?token=4VTmFoh7EZm8P5Hm3bd5E2Zs')
+      // fetch('http://localhost:5000/socks')
       .then(response => response.json())
       // .then(response => console.log(response))
       .then(response => {
-         console.log(response.socks)
+         console.log(response[1].subtotal)
          this.setState ({
-            socks: response.socks
+            cart: response[0],
+            subtotal: response[1].subtotal,
+            tax: response[1].tax,
+            shipping: response[1].shipping,
+            total: response[1].total,
          })
-
       })
+      console.log(this.state.subtotal)
    }
    componentWillUnmount() {
       detachSharedState(this)
@@ -136,30 +147,23 @@ class CartDisplay extends React.Component {
 
    }
    render() {
-      var socksArray = []
+      var cartArray = []
       var socksId = []
-      var orderSubtotal = 0
-      var orderTax = 0
-      var orderTaxRate = .07
-      var orderShipping = 0
-      // var orderShipping = socksArray.length * 2
-      var orderTotal = orderShipping + orderSubtotal
       // var orderTotal = 0
-      var socks = this.state.socks.map((sock, i) => {
+      var cart = this.state.cart.map((sock, i) => {
          //   if (socksId.indexOf(sock.name) === -1) {
          if (socksId.indexOf(sock.name) === -1) {
             socksId.push(sock.name)
-            socksArray.push(sock)
-            orderSubtotal += sock.price
-            orderShipping += 2
+            cartArray.push(sock)
+            // orderSubtotal += sock.price
+            // orderShipping += 2
             //  orderTotal += orderShipping + orderSubtotal
          }
       })
-      orderTax = Math.round((orderSubtotal * orderTaxRate), 2)
-      orderTotal = orderSubtotal + orderShipping + orderTax
 
-      console.log(socksArray)
-      var displayOrder = socksArray.map((sock, i) => { //Showing socks now, change to cart API fetch when available
+
+      console.log(cartArray)
+      var displayOrder = cartArray.map((sock, i) => { //Showing socks now, change to cart API fetch when available
          return  <div className="col-sm-12" key={i}>
             <div className="panel panel-default">
                <div className="panel-body sock-panel">
@@ -511,10 +515,10 @@ class CartDisplay extends React.Component {
                         <p>Total</p>
                      </div>
                      <div className="col-sm-6 justify-right">
-                        <p>{ orderSubtotal }</p>
-                        <p>{ orderTax }</p>
-                        <p>{ orderShipping }</p>
-                        <p>{ orderTotal }</p>
+                        <p>{ accounting.formatMoney(this.state.subtotal/100) }</p>
+                        <p>{ accounting.formatMoney(this.state.tax/100) }</p>
+                        <p>{ accounting.formatMoney(this.state.shipping/100) }</p>
+                        <p>{ accounting.formatMoney(this.state.total/100) }</p>
                      </div>
                   </div>
                </div>
