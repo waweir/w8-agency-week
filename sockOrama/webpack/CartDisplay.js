@@ -107,6 +107,7 @@ class CartDisplay extends React.Component {
       // console.log(updatedState)
       this.setState(updatedState)
       this.collectShippingAddress()
+      console.log(e)
    }
    // typingBillingLastName(e) {
    //    this.setState({
@@ -650,11 +651,6 @@ class CartDisplay extends React.Component {
                </div>
                <input type="checkbox" id="newsletter" name="newsletter" /><label htmlFor="newsletter">Like socks? Want newsletter?!</label>
                <button className="btn btn-success btn-block" onClick={this.submitOrder}>Purchase</button>
-               <button type='btn' src="https://checkout.stripe.com/checkout.js" className="stripe-button"
-                      data-key="pk_test_qxSubRts5DNwAM0nVqYw8mqi"
-                      data-description="This awesome photo!"
-                      data-amount="500"
-                      data-locale="auto"></button>
             </div>
          </div>
       </div>
