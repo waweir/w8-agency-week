@@ -17,7 +17,7 @@ class SocksController < ApplicationController
       @socks = @socks.ransack(params[:filter]).result
     end
     # @socks = @socks.to_a.uniq
-    render json: @socks, include: ['sizes']
+    render json: @socks, include: ['sizes, colors, styles, categories']
   end
 
   def create

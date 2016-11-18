@@ -22,4 +22,8 @@ class Cart < ApplicationRecord
     subtotal + tax + shipping
   end
 
+  def order_complete
+    self.complete = true
+  end
+
 end
