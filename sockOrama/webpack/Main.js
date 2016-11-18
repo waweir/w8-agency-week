@@ -15,18 +15,15 @@ class Main extends React.Component {
          this.setState({
              itemsInCart: 0
          })
-         if (sessionStorage.getItem('cart_token') == null) {
-           console.log(this.state.itemsInCart)
-         } else {
+         if (sessionStorage.getItem('cart_token') != null) {
            console.log(sessionStorage.getItem('cart_token'))
            fetch('/view_cart?token=' + sessionStorage.getItem('cart_token'))
            .then(response => response.json())
            .then(repsonse => {
              console.log(response)
-
+             itemsInCart: response.cart.line_items.length
            })
-         }
-         // console.log(this.state.itemsInCart)
+        }
     }
 
     componentWillUnmount() {
