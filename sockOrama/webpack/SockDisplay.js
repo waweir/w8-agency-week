@@ -156,11 +156,16 @@ class SockDisplay extends React.Component {
     }
 
     addToCart() {
+      if (sessionStorage.getItem('cart_token') != null) {
+        var cartToken = '&token=' + sessionStorage.getItem('cart_token')
+      } else {
+        var cartToken = ''
+      }
       if (this.state.sizeSelection == 0) {
         alert('Please select a size')
       } else {
         var cartQuantity = this.state.cartQuantity += 1
-        fetch('/add_to_cart?size_id=' + this.state.sizeSelection + '&num_ordered=' + this.state.quantity + '&token=' + sessionStorage.getItem('cart_token'), {
+        fetch('/add_to_cart?size_id=' + this.state.sizeSelection + '&num_ordered=' + this.state.quantity + cartToken, {
           method: 'POST'
         })
         .then(response => response.json())
