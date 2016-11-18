@@ -3,14 +3,14 @@ class LineItemsController < ApplicationController
   def create
     if params[:token]
       @line_item = LineItem.new(
-        check_stock(@line_item)
+        check_stock(@line_item),
         size_id:      params[:size_id],
         num_ordered:  params[:num_ordered],
         cart:         Cart.where(token: params[:token]).first
         )
     else
       @line_item = LineItem.new(
-        check_stock(@line_item)
+        check_stock(@line_item),
         size_id:      params[:size_id],
         num_ordered:  params[:num_ordered],
         cart:         Cart.new
