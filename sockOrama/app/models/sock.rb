@@ -10,12 +10,14 @@ class Sock < ApplicationRecord
 
   scope :featured, -> { where(featured: true) }
 
-
-  pg_search_scope :search_full_text, :against => [
-      [:name, 'A'],
-      [:category, 'B'],
-      :color,
-      :style
-    ]
+  pg_search_scope :search_full_text,
+    :against => {
+        :name => 'A'
+    },
+    :associated_against => {
+      :category => [:name],
+      :color => [:name],
+      :style => [:name]
+    }
 
 end

@@ -18,6 +18,7 @@ def create
     :currency    => 'usd'
   )
 
+  @cart.order_complete
   render json: ["Successfully charged"]
 
 rescue Stripe::CardError => e
