@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :carts
   post '/add_to_cart' => 'line_items#create'
   get '/view_cart' => 'carts#show'
+  patch '/order_info' => 'carts#update'
   resources :socks do
     collection do
       get :filter
