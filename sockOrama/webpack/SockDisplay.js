@@ -1,5 +1,6 @@
 import React from 'react'
 import classAutoBind from 'react-helpers/dist/classAutoBind'
+import { sharedState, attachSharedState, detachSharedState } from 'react-helpers/dist/sharedState'
 import Modal from 'react-modal'
 
 const customStyles = {
@@ -18,6 +19,7 @@ class SockDisplay extends React.Component {
         super(props)
         classAutoBind(this)
         this.state = {
+            sharedState: sharedState(),
             modalIsOpen: false,
             quantity: 1,
             sizeSelection: '0',
@@ -32,21 +34,28 @@ class SockDisplay extends React.Component {
             modalPrice: '',
             modalImage: '',
             modalSizes: [],
-            cartQuantity: 0
         }
     }
     componentDidMount() {
+      attachSharedState(this)
+      sharedState({
+        cartQuantity: 0,
+      })
       fetch('/socks')
       .then(response => response.json())
       .then((response) => {
         console.log(response.socks)
-        this.setState({
+        sharedState({
           socks: response.socks
         })
         document.querySelector('.item').classList.add('active')
         document.querySelector('.carousel-indicators > li').classList.add('active')
         document.querySelector('input[name="priceRadios"]:first-child').checked = true
       })
+    }
+
+    componentWillUnmount() {
+      detachSharedState(this)
     }
 
     openModal(sock) {
@@ -114,7 +123,7 @@ class SockDisplay extends React.Component {
       fetch('/socks/filter?filter[color_name_cont]=' + colorFilter + '&filter[style_name_cont]=' + styleFilter + '&filter[category_name_cont]=' + materialFilter + '&filter[sizes_abbr_cont]=' + sizeFilter)
       .then(response => response.json())
       .then(response => {
-          this.setState({
+          sharedState({
             socks: response.socks
           })
       })
@@ -149,7 +158,7 @@ class SockDisplay extends React.Component {
         })
         .then(response => response.json())
         .then(response => console.log(response))
-        this.setState({
+        sharedState({
           cartQuantity: cartQuantity
         })
         console.log(this.state.cartQuantity)
