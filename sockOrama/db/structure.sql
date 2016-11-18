@@ -55,7 +55,7 @@ CREATE TABLE carts (
     ship_to_address character varying,
     email character varying,
     customer character varying,
-    complete boolean,
+    complete boolean DEFAULT false NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -379,14 +379,14 @@ ALTER TABLE ONLY line_items ALTER COLUMN id SET DEFAULT nextval('line_items_id_s
 
 
 --
--- Name: pg_search_documents id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pg_search_documents ALTER COLUMN id SET DEFAULT nextval('pg_search_documents_id_seq'::regclass);
 
 
 --
--- Name: refile_attachments id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY refile_attachments ALTER COLUMN id SET DEFAULT nextval('refile_attachments_id_seq'::regclass);
@@ -454,7 +454,7 @@ ALTER TABLE ONLY line_items
 
 
 --
--- Name: pg_search_documents pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pg_search_documents
@@ -462,7 +462,7 @@ ALTER TABLE ONLY pg_search_documents
 
 
 --
--- Name: refile_attachments refile_attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: refile_attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY refile_attachments
@@ -618,4 +618,6 @@ ALTER TABLE ONLY socks
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20161114225843'), ('20161115223957'), ('20161115224017'), ('20161115224024'), ('20161115224818'), ('20161115224930'), ('20161115225131'), ('20161115225207'), ('20161116172613'), ('20161116203557'), ('20161116211810'), ('20161117010157');
+INSERT INTO schema_migrations (version) VALUES ('20161114225843'), ('20161115223957'), ('20161115224017'), ('20161115224024'), ('20161115224818'), ('20161115224930'), ('20161115225131'), ('20161115225207'), ('20161116172613'), ('20161116203557'), ('20161116211810'), ('20161117010157'), ('20161118014549');
+
+
