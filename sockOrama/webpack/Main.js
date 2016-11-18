@@ -1,5 +1,25 @@
 import React from 'react'
 import { Link } from 'react-router'
+import Search from '../react-search/lib/Search'
+
+// setting up serach bar to find matches
+
+var searchTerm
+
+document.querySelector('.searchBar').addEventListener('click', search)
+document.querySelector('.searchInput').addEventListener('keypress', searchEnter)
+
+function searchEnter(event) {
+    if (event.key === 'Enter') {
+        search()
+    }
+
+function search() {
+    searchTerm = document.querySelector('#searchInput').value
+    fetch('/socks/filter?' + searchTerm)
+}
+
+
 
 class Main extends React.Component {
     constructor(props) {
@@ -15,7 +35,7 @@ class Main extends React.Component {
                     <form className="form-inline" role="search">
                       <div className="form-group searchBar">
                         <input type="text" className="form-control" placeholder="Search" />
-                      <button type="submit" className="btn btn-default">Submit</button>
+                      <button type="submit" className="btn btn-default searchInput">Submit</button>
                       </div>
                     </form>
                 </div>

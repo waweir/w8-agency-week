@@ -56,16 +56,46 @@ class SockDisplay extends React.Component {
     handleFilterChange(e) {
       // TODO: add fetch call with values
       var price = document.querySelector('input[name="priceRadios"]:checked')
+      var size = []
+      var color = []
+      var material = []
+      var style = []
       if (e.target.name === 'priceRadios') {
         price.checked = false
         e.target.checked = true
-        console.log(e.target.value)
-        console.log(price.value)
-      } else {
-        console.log('test')
+      } else if (e.target.name === 'sizeCheckbox') {
+        document.querySelectorAll('input[name="sizeCheckbox"]:checked').forEach(function(check) {
+          size.push(check.value)
+        })
+      } else if (e.target.name === 'colorCheckbox') {
+        document.querySelectorAll('input[name="colorCheckbox"]:checked').forEach(function(check) {
+          color.push(check.value)
+        })
+        if (color.length > 0) {
+          this.state.colorFilter += color.join(',')
+        }
+      } else if (e.target.name == 'materialCheckbox') {
+        document.querySelectorAll('input[name="materialCheckbox"]:checked').forEach(function(check) {
+          material.push(check.value)
+        })
+        if (material.length > 0) {
+          this.state.materialFilter += material.join(',')
+        }
+      } else if (e.target.name === 'styleCheckbox') {
+        document.querySelectorAll('input[name="styleCheckbox"]:checked').forEach(function(check) {
+          style.push(check.value)
+        })
+        if (style.length > 0) {
+          this.state.styleFilter += style.join(',')
+        }
       }
 
-
+      // start function to contatenate and send fetch call with filter values
+      var sizeFilter = size.join(',')
+      var colorFilter = color.join(',')
+      var materialFilter = material.join(',')
+      var styleFilter = style.join(',')
+      console.log('price: ' + price.value + ' size: ' + sizeFilter + ' color: ' + colorFilter + ' material: ' + materialFilter + ' style: ' + styleFilter)
     }
     handleSizeChange(e) {
       this.setState({
@@ -132,6 +162,7 @@ class SockDisplay extends React.Component {
           return <li data-target="#featuredSocks" data-slide-to="{i}" key={i}></li>
         }
       })
+
         return <main className="container-fluid">
           {/* Start Featured Socks  */}
               <div className="row">
@@ -203,37 +234,37 @@ class SockDisplay extends React.Component {
                     <h4>Size</h4>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="s" onChange={this.handleFilterChange} />
+                        <input type="checkbox" value="s" name="sizeCheckbox" onChange={this.handleFilterChange} />
                         S
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="m" />
+                        <input type="checkbox" value="m" name="sizeCheckbox" onChange={this.handleFilterChange} />
                         M
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="l" />
+                        <input type="checkbox" value="l" name="sizeCheckbox" onChange={this.handleFilterChange} />
                         L
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="xl" />
+                        <input type="checkbox" value="xl" name="sizeCheckbox" onChange={this.handleFilterChange} />
                         XL
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="xxl" />
+                        <input type="checkbox" value="xxl" name="sizeCheckbox" onChange={this.handleFilterChange} />
                         XXL
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="xxxl" />
+                        <input type="checkbox" value="xxxl" name="sizeCheckbox" onChange={this.handleFilterChange} />
                         XXXL
                       </label>
                     </div>
@@ -243,37 +274,37 @@ class SockDisplay extends React.Component {
                     <h4>Color</h4>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="grey" />
+                        <input type="checkbox" name="colorCheckbox" value="grey" onChange={this.handleFilterChange} />
                         Grey
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="cream" />
+                        <input type="checkbox" name="colorCheckbox" value="cream" onChange={this.handleFilterChange} />
                         Cream
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="brown" />
+                        <input type="checkbox" name="colorCheckbox" value="brown" onChange={this.handleFilterChange} />
                         Brown
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="black" />
+                        <input type="checkbox" name="colorCheckbox" value="black" onChange={this.handleFilterChange} />
                         Black
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="charcoal" />
+                        <input type="checkbox" name="colorCheckbox" value="charcoal" onChange={this.handleFilterChange} />
                         Charcoal
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="various" />
+                        <input type="checkbox" name="colorCheckbox" value="various" onChange={this.handleFilterChange} />
                         Various
                       </label>
                     </div>
@@ -283,25 +314,25 @@ class SockDisplay extends React.Component {
                     <h4>Material</h4>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="blended" />
+                        <input type="checkbox" name="materialCheckbox" value="blended" onChange={this.handleFilterChange} />
                         Blended
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="llama" />
+                        <input type="checkbox" name="materialCheckbox" value="llama" onChange={this.handleFilterChange} />
                         Llama
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="alpaca" />
+                        <input type="checkbox" name="materialCheckbox" value="alpaca" onChange={this.handleFilterChange} />
                         Alpaca
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="wool" />
+                        <input type="checkbox" name="materialCheckbox" value="wool" onChange={this.handleFilterChange} />
                         Wool
                       </label>
                     </div>
@@ -311,19 +342,19 @@ class SockDisplay extends React.Component {
                     <h4>Style</h4>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="crew" />
+                        <input type="checkbox" name="styleCheckbox" value="crew" onChange={this.handleFilterChange} />
                         Crew
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="dress" />
+                        <input type="checkbox" name="styleCheckbox" value="dress" onChange={this.handleFilterChange} />
                         Dress
                       </label>
                     </div>
                     <div className="checkbox">
                       <label>
-                        <input type="checkbox" value="knee" />
+                        <input type="checkbox" name="styleCheckbox" value="knee" onChange={this.handleFilterChange} />
                         Knee
                       </label>
                     </div>
