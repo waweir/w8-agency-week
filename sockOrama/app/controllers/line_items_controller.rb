@@ -15,9 +15,16 @@ class LineItemsController < ApplicationController
       )
     end
     if @line_item.save
+      @line_item.size.instock -= @line_item.num_ordered
       render json: @line_item.cart, include: ['line_items.size, line_items.sock, line_items.sock.color, line_items.sock.style, line_items.sock.category']
     else
       render json: @line_item.errors.full_messages, status: :unprocessable_entity
+    end
+  end
+
+  def check_stock(@line_item)
+    if @line_item.num_ordered >= @line_item.size.in_stock
+      render json: "Not enough in stock!"
     end
   end
 
