@@ -2277,14 +2277,6 @@ react-router@^2.6.0:
     loose-envify "^1.2.0"
     warning "^3.0.0"
 
-react-search-bar@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/react-search-bar/-/react-search-bar-1.1.4.tgz#3c465b7e19d3404614dc38e2ca8966fb8e9f1c93"
-
-react-search@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/react-search/-/react-search-2.0.4.tgz#927c9864aae1d07f00bf0f736611243533482930"
-
 react@^15.2.1:
   version "15.3.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.3.2.tgz#a7bccd2fee8af126b0317e222c28d1d54528d09e"
