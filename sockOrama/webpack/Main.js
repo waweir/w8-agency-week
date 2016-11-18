@@ -2,29 +2,25 @@ import React from 'react'
 import { Link } from 'react-router'
 import Search from '../react-search/lib/Search'
 
-// setting up serach bar to find matches
-
-var searchTerm
-
-document.querySelector('.searchBar').addEventListener('click', search)
-document.querySelector('.searchInput').addEventListener('keypress', searchEnter)
-
-function searchEnter(event) {
-    if (event.key === 'Enter') {
-        search()
-    }
-
-function search() {
-    searchTerm = document.querySelector('#searchInput').value
-    fetch('/socks/filter?' + searchTerm)
-}
-
-
-
 class Main extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            searchTerm: ''
+        }
     }
+
+    searchEnter(event) {
+        if (event.key === 'Enter') {
+            this.search()
+        }
+    }
+
+    search() {
+        searchTerm = this.state.searchTerm
+        fetch('/socks/filter?q=' + searchTerm)
+    }
+
     render() {
         return <div>
             <div className="header row">
@@ -34,8 +30,8 @@ class Main extends React.Component {
                 <div className="col-xs-8 col-sm-4 text-center">
                     <form className="form-inline" role="search">
                       <div className="form-group searchBar">
-                        <input type="text" className="form-control" placeholder="Search" />
-                      <button type="submit" className="btn btn-default searchInput">Submit</button>
+                        <input type="text" className="form-control" placeholder="Search" onChange={(e) => this.setState({searchTerm: e.target.value})} value={this.state.searchTerm} />
+                      <button type="submit" className="btn btn-default searchInput" onClick={this.searchClick}>Submit</button>
                       </div>
                     </form>
                 </div>
