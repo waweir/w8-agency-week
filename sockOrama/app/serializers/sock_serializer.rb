@@ -7,7 +7,7 @@ class SockSerializer < ActiveModel::Serializer
   has_many :line_items, through: :sizes
 
   def image
-    Refile.attachment_url(object, :image, :fit, 50, 50, format: "jpg")
+    Refile.attachment_url(object, :image, :fit, 200, 200, format: "jpg")
   end
 
 end
