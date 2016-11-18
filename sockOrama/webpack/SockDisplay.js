@@ -57,17 +57,15 @@ class SockDisplay extends React.Component {
         fetch('/socks/filter?filter[name_cont]=' + sock)
         .then(response => response.json())
         .then((response) => {
-          console.log(response.socks[0].sizes)
           this.setState({
             modalSocks: response.socks,
             modalTitle: response.socks[0].name,
             modalDescription: response.socks[0].description,
-            modalQuantity: response.socks.length,
-            modalColor: response.socks[0].color.name,
-            modalStyle: response.socks[0].style.name,
-            modalMaterial: response.socks[0].category.name,
+            // modalColor: response.socks[0].color.name,
+            // modalStyle: response.socks[0].style.name,
+            // modalMaterial: response.socks[0].category.name,
             modalPrice: (response.socks[0].price / 100).toFixed(2),
-            modalImage: 'http://unsplash.it/300?random',
+            modalImage: response.socks[0].image,
             modalSizes: response.socks[0].sizes
           })
         })
@@ -81,7 +79,6 @@ class SockDisplay extends React.Component {
     }
 
     handleFilterChange(e) {
-      // TODO: add fetch call with values
       var price = document.querySelector('input[name="priceRadios"]:checked')
       var size = []
       var color = []
@@ -109,12 +106,12 @@ class SockDisplay extends React.Component {
       }
 
       // start function to contatenate and send fetch call with filter values
-      var sizeFilter = size.join('')
+      var sizeFilter = size.join('&filter[sizes_abbr_cont]=')
       var colorFilter = color.join('&filter[color_name_cont]=')
       var materialFilter = material.join('&filter[category_name_cont]=')
       var styleFilter = style.join('&filter[style_name_cont]=')
 
-      fetch('/socks/filter?filter[color_name_cont]=' + colorFilter + '&filter[style_name_cont]=' + styleFilter + '&filter[category_name_cont]=' + materialFilter)
+      fetch('/socks/filter?filter[color_name_cont]=' + colorFilter + '&filter[style_name_cont]=' + styleFilter + '&filter[category_name_cont]=' + materialFilter + '&filter[sizes_abbr_cont]=' + sizeFilter)
       .then(response => response.json())
       .then(response => {
           this.setState({
@@ -173,8 +170,8 @@ class SockDisplay extends React.Component {
         return  <div className="col-xs-12 col-sm-4" key={i}>
           <div className="panel panel-default" onClick={() => this.openModal(sock.name)}>
             <div className="panel-body sock-panel">
-              <div className="row">
-                <img src="http://unsplash.it/300?random" width="100%"/>
+              <div className="row flex">
+                <img className="sock_image" src={sock.image} />
               </div>
               <div className="row">
                 <div className="col-xs-8">
@@ -434,7 +431,7 @@ class SockDisplay extends React.Component {
               style={customStyles}
               contentLabel="Sock Modal"
               >
-                <div className="row">
+                <div className="row modal_row">
                   <div className="col-xs-10">
                     <h2>{this.state.modalTitle} <span className="lead small">${this.state.modalPrice} each</span></h2>
                     <p className="lead small">{this.state.modalDescription}</p>
@@ -444,8 +441,8 @@ class SockDisplay extends React.Component {
                   </div>
                 </div>
             <div className="row">
-            <div className="col-sm-6 text-center">
-              <img src={this.state.modalImage} width="100%"/>
+            <div className="col-sm-6 flex">
+              <img className="sock_image_modal" src={this.state.modalImage} width="100%"/>
             </div>
             <div className="col-sm-6">
               <div className="form-group">
