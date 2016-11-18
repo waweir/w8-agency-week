@@ -1,0 +1,273 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+.header {
+  padding: 3vh;
+  border-bottom: 2px solid #C22E14;
+  background-color: white;
+  box-shadow: 0px 2px 5px gray;
+}
+
+.logo {
+  width: 25vh;
+}
+
+.cartButton {
+  background-color: #1B7FFB;
+}
+
+.cartButton div {
+  color: white;
+  width: 50%;
+}
+
+.cartButton .badge {
+  color: white;
+  background-color: transparent;
+}
+
+.cartButton:hover {
+  background-color: #C22E14;
+}
+
+.searchBar {
+  margin: 8px 0 0 0;
+}
+
+.sock-panel {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.sock-panel p {
+  margin: 0;
+  padding: 10px 0;
+}
+
+#socksContainer {
+  background-color: #f5f5f1;
+}
+
+#teamLogo {
+  width: 10vw;
+}
+
+footer {
+  background-color: white;
+  padding: 3vh;
+  border-top: 2px solid #C22E14;
+  box-shadow: 0px -2px 5px gray;
+}
+
+#cart-confirmation {
+  display: inline-block;
+  font-size: 13px;
+}
+
+#cart-confirmation .justify-right {
+  text-align: right;
+}
+
+.pushDown {
+  margin-top: 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+.modalPrice {
+  margin-top: 20px;
+}
+
+.checkout {
+  padding-bottom: 20px;
+}
+
+.checkout button {
+  height: 100px;
+  font-size: 3vw;
+  border-radius: 2vw;
+}
+
+.sock_image {
+  height: 125px;
+  width: 50%;
+  display: block;
+  padding: 5px;
+}
+
+.sock_image_modal {
+  width: 50%;
+  height: 125px;
+  margin-top: 30px;
+}
+
+.modal_row {
+  min-width: 500px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* line 4, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+* {
+  box-sizing: border-box;
+}
+
+/* line 7, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+/* line 10, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.header {
+  padding: 3vh;
+  border-bottom: 2px solid #C22E14;
+  background-color: white;
+  box-shadow: 0px 2px 5px gray;
+}
+
+/* line 16, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.logo {
+  width: 25vh;
+}
+
+/* line 19, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.cartButton {
+  background-color: #1B7FFB;
+}
+/* line 21, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.cartButton div {
+  color: white;
+  width: 50%;
+}
+/* line 25, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.cartButton .badge {
+  color: white;
+  background-color: transparent;
+}
+/* line 29, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.cartButton:hover {
+  background-color: #C22E14;
+}
+
+/* line 33, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.searchBar {
+  margin: 8px 0 0 0;
+}
+
+/* line 36, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.sock-panel {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+/* line 39, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.sock-panel p {
+  margin: 0;
+  padding: 10px 0;
+}
+
+/* line 44, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+#socksContainer {
+  background-color: #f5f5f1;
+}
+
+/* line 47, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+#teamLogo {
+  width: 10vw;
+}
+
+/* line 50, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+footer {
+  background-color: white;
+  padding: 3vh;
+  border-top: 2px solid #C22E14;
+  box-shadow: 0px -2px 5px gray;
+}
+
+/* line 56, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+#cart-confirmation {
+  display: inline-block;
+  font-size: 13px;
+}
+/* line 59, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+#cart-confirmation .justify-right {
+  text-align: right;
+}
+
+/* line 63, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.pushDown {
+  margin-top: 15px;
+}
+
+/* line 66, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.hidden {
+  display: none;
+}
+
+/* line 70, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.modalPrice {
+  margin-top: 20px;
+}
+
+/* line 74, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.checkout {
+  padding-bottom: 20px;
+}
+/* line 76, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.checkout button {
+  height: 100px;
+  font-size: 3vw;
+  border-radius: 2vw;
+}
+
+/* line 82, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.sock_image {
+  height: 125px;
+  width: 50%;
+  display: block;
+  padding: 5px;
+}
+
+/* line 88, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.sock_image_modal {
+  width: 50%;
+  height: 125px;
+  margin-top: 30px;
+}
+
+/* line 93, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.modal_row {
+  min-width: 500px;
+}
+
+/* line 96, /Users/chrisflack/Documents/TheIronYard/w8d1-agency/sockOrama/app/assets/stylesheets/global.scss */
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+
+
+ */
+
