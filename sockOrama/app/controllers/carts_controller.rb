@@ -2,7 +2,7 @@ class CartsController < ApplicationController
 
   def show
     @cart = Cart.find_by(token: params[:token])
-    render json: [@cart.line_items, subtotal: @cart.subtotal, tax: @cart.tax, shipping: @cart.shipping, total: @cart.total], include: ['size']
+    render json: [@cart.line_items, token: @cart.token, subtotal: @cart.subtotal, tax: @cart.tax, shipping: @cart.shipping, total: @cart.total], include: ['size']
   end
 
   def update
@@ -13,7 +13,7 @@ class CartsController < ApplicationController
       @cart.update! (cart_params)
     end
     if @cart.save
-      render json: @cart
+      render json: [@cart.line_items, token: @cart.token, subtotal: @cart.subtotal, tax: @cart.tax, shipping: @cart.shipping, total: @cart.total]
     else
       render json: @cart.errors
     end
