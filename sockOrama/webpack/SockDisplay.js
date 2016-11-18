@@ -37,9 +37,24 @@ class SockDisplay extends React.Component {
         }
     }
     componentDidMount() {
-      attachSharedState(this)
-      sharedState({
-          cartQuantity: 0
+      attachSharedState(this, (updatedSharedState) => {
+        this.setState({sharedState: updatedSharedState})
+
+        if (updatedSharedState.updateSearchResults) {
+          var searchTerm = 'search=' + updatedSharedState.updateSearchResults
+        } else {
+          var searchTerm = ''
+        }
+          fetch('/socks/filter?' + searchTerm)
+            .then(response => response.json())
+            .then(response => {
+                this.setState({
+                    socks: response.socks
+                })
+                document.querySelector('.item').classList.add('active')
+                document.querySelector('.carousel-indicators > li').classList.add('active')
+                // document.querySelector('input[name="priceRadios"]:first-child').checked = true
+            })
       })
       fetch('/socks')
       .then(response => response.json())
@@ -47,10 +62,7 @@ class SockDisplay extends React.Component {
         sharedState({
           socks: response.socks
         })
-        document.querySelector('.item').classList.add('active')
-        document.querySelector('.carousel-indicators > li').classList.add('active')
-        document.querySelector('input[name="priceRadios"]:first-child').checked = true
-      })
+            })
     }
 
     componentWillUnmount() {
@@ -130,7 +142,7 @@ class SockDisplay extends React.Component {
       fetch('/socks/filter?filter[color_name_cont]=' + colorFilter + '&filter[style_name_cont]=' + styleFilter + '&filter[category_name_cont]=' + materialFilter + '&filter[sizes_abbr_cont]=' + sizeFilter)
       .then(response => response.json())
       .then(response => {
-          sharedState({
+          this.setState({
             socks: response.socks
           })
       })
@@ -164,7 +176,8 @@ class SockDisplay extends React.Component {
       if (this.state.sizeSelection == 0) {
         alert('Please select a size')
       } else {
-        var cartQuantity = this.state.cartQuantity += 1
+        // var cartQuantity = this.state.cartQuantity
+        // var cartQuantity = this.state.cartQuantity.push('item')
         fetch('/add_to_cart?size_id=' + this.state.sizeSelection + '&num_ordered=' + this.state.quantity + cartToken, {
           method: 'POST'
         })
@@ -172,9 +185,10 @@ class SockDisplay extends React.Component {
         .then(response => {
           sessionStorage.setItem('cart_token', response.cart.token)
         })
-        sharedState({
-          cartQuantity: cartQuantity
-        })
+        // sharedState({
+        //   cartQuantity: cartQuantity
+        // })
+        // console.log(this.state.cartQuantity)
       }
       this.closeModal()
     }
@@ -269,7 +283,7 @@ class SockDisplay extends React.Component {
             {/* Start Filter Panel */}
               <section className="col-xs-5 col-sm-2 panel panel-default">
                 <div className="panel-body">
-                  <ul className="list-unstyled">
+                  {/* <ul className="list-unstyled">
                     <h4>Price</h4>
                     <div className="radio">
                       <label>
@@ -301,8 +315,8 @@ class SockDisplay extends React.Component {
                         Over $40
                       </label>
                     </div>
-                  </ul>
-                  <hr />
+                  </ul> */}
+                  {/* <hr /> */}
                   <ul className="list-unstyled">
                     <h4>Size</h4>
                     <div className="checkbox">
