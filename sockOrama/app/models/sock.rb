@@ -15,7 +15,7 @@ class Sock < ApplicationRecord
         :name => 'A'
     },
     :associated_against => {
-      :category => [:name => 'B'],
+      :category => [:name],
       :color => [:name],
       :style => [:name]
     }
