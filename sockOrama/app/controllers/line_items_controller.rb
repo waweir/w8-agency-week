@@ -3,14 +3,12 @@ class LineItemsController < ApplicationController
   def create
     if params[:token]
       @line_item = LineItem.new(
-        check_stock(@line_item),
         size_id:      params[:size_id],
         num_ordered:  params[:num_ordered],
         cart:         Cart.where(token: params[:token]).first
         )
     else
       @line_item = LineItem.new(
-        check_stock(@line_item),
         size_id:      params[:size_id],
         num_ordered:  params[:num_ordered],
         cart:         Cart.new
@@ -23,26 +21,10 @@ class LineItemsController < ApplicationController
     end
   end
 
-  def check_stock(line_item)
-    if line_item.num_ordered >= line_item.size.in_stock
-      render json: "Not enough in stock!"
-    end
-  end
-
-  # def update
-  #   @line_item = LineItem.find(params :id)
-  #   @line_item.
-  # end
-
   def destroy
     @line_item = LineItem.find(params :id)
     @line_item.destroy!
     render json: 'Item removed!'
-  end
-
-  def line_item_price
-    size_price = Sock.find(sock_id).price
-    size_price * :num_ordered
   end
 
 end
