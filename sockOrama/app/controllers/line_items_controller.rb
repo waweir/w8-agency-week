@@ -15,7 +15,7 @@ class LineItemsController < ApplicationController
       )
     end
     if @line_item.save
-      render json: @line_item, include: 'size.sock'
+      render json: @line_item.cart, include: ['line_items.size, line_items.sock, line_items.sock.color, line_items.sock.style, line_items.sock.category']
     else
       render json: @line_item.errors.full_messages, status: :unprocessable_entity
     end
