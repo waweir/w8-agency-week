@@ -104,10 +104,18 @@ class SockDisplay extends React.Component {
         document.querySelectorAll('input[name="colorCheckbox"]:checked').forEach(function(check) {
           color.push(check.value)
         })
+
+        if (color.length > 0) {
+          this.state.colorFilter += color.join(',')
+        }
       } else if (e.target.name == 'materialCheckbox') {
         document.querySelectorAll('input[name="materialCheckbox"]:checked').forEach(function(check) {
           material.push(check.value)
         })
+
+        if (material.length > 0) {
+          this.state.materialFilter += material.join(',')
+        }
       } else if (e.target.name === 'styleCheckbox') {
         document.querySelectorAll('input[name="styleCheckbox"]:checked').forEach(function(check) {
           style.push(check.value)
@@ -223,7 +231,7 @@ class SockDisplay extends React.Component {
       var modalSizes = this.state.modalSizes.map((size, i) => {
         return <option value={size.id} key={i}>{size.abbr}</option>
       })
-
+      
         return <main className="container-fluid">
           {/* Start Featured Socks  */}
               <div className="row">
