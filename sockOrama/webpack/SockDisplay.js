@@ -37,7 +37,20 @@ class SockDisplay extends React.Component {
         }
     }
     componentDidMount() {
-      attachSharedState(this)
+      attachSharedState(this, (updatedSharedState) => {
+        this.setState({sharedState: updatedSharedState})
+
+        if (updatedSharedState.updateSearchResults) {
+          fetch('/socks/filter?search=' + updatedSharedState.updateSearchResults)
+            .then(response => response.json())
+            .then(response => {
+                this.setState({
+                    socks: response.socks
+                })
+            })
+        }
+      })
+
       sharedState({
           cartQuantity: 0
       })
@@ -50,7 +63,7 @@ class SockDisplay extends React.Component {
         document.querySelector('.item').classList.add('active')
         document.querySelector('.carousel-indicators > li').classList.add('active')
         document.querySelector('input[name="priceRadios"]:first-child').checked = true
-      })
+  })
     }
 
     componentWillUnmount() {
@@ -130,7 +143,7 @@ class SockDisplay extends React.Component {
       fetch('/socks/filter?filter[color_name_cont]=' + colorFilter + '&filter[style_name_cont]=' + styleFilter + '&filter[category_name_cont]=' + materialFilter + '&filter[sizes_abbr_cont]=' + sizeFilter)
       .then(response => response.json())
       .then(response => {
-          sharedState({
+          this.setState({
             socks: response.socks
           })
       })

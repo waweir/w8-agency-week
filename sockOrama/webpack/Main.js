@@ -1,23 +1,45 @@
 import React from 'react'
 import { Link } from 'react-router'
+import { sharedState, attachSharedState, detachSharedState } from 'react-helpers/dist/sharedState'
+import classAutoBind from 'react-helpers/dist/classAutoBind'
+
 
 class Main extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            searchTerm: ''
-        }
+        classAutoBind(this)
+        this.state = sharedState()
+    }
+    componentDidMount() {
+         attachSharedState(this)
+    }
+
+    componentWillUnmount() {
+        detachSharedState(this)
     }
 
     searchEnter(event) {
         if (event.key === 'Enter') {
-            this.search()
+            this.searchClick()
+        }
+        else {
+            sharedState({
+                enteredSearchTerm: event.target.value
+            })
         }
     }
-
-    search() {
-        searchTerm = this.state.searchTerm
-        fetch('/socks/filter?q=' + searchTerm)
+    // updateSearchTerm(e) {
+    //     thiState({
+    //         searchTerm: e.target.value
+    //     })
+    // }
+    searchClick() {
+        var searchValue = this.state.enteredSearchTerm
+        console.log(searchValue)
+        // var searchTerm = this.state.searchTerm
+        sharedState({
+            updateSearchResults: searchValue
+        })
     }
 
     render() {
@@ -27,19 +49,19 @@ class Main extends React.Component {
                 <Link to="/socks"><img alt="Brand" className="logo" src="img/sock-o-rama.png" /></Link>
                 </div>
                 <div className="col-xs-8 col-sm-4 text-center">
-                    <form className="form-inline" role="search">
+                    {/* <form className="form-inline" role="search"> */}
                       <div className="form-group searchBar">
-                        <input type="text" className="form-control" placeholder="Search" onChange={(e) => this.setState({searchTerm: e.target.value})} value={this.state.searchTerm} />
-                      <button type="submit" className="btn btn-default searchInput" onClick={this.searchClick}>Submit</button>
+                        <input id="searchInput" type="text" className="form-control" placeholder="Search" onChange={this.searchEnter}/>
+                      <button type="button" className="btn btn-default searchInput" onClick={this.searchClick}>Submit</button>
                       </div>
-                    </form>
+                    {/* </form> */}
                 </div>
                 <div className="col-xs-4 col-sm-4 text-right">
                     <Link to="/cart">
                     {/* TODO: where # is, put the counter of items.*/}
                     <button className="cartButton btn btn-default btn-lg">
                         <div className="glyphicon glyphicon-shopping-cart"></div>
-                        <span className="badge">#</span>
+                        <span className="badge">{this.state.cartQuantity}</span>
                     </button>
                     </Link>
                 </div>
